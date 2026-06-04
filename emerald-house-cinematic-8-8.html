@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emerald House — Interior Design Dubai</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@200;300;400&family=Electrolize&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#080808;--deep:#0d0f0d;--em:#2d7a5a;--em-l:#4aad82;--white:#f0ece4;--dim:rgba(240,236,228,0.52)}
+html{scroll-behavior:auto}
+body{background:var(--black);color:var(--white);font-family:'Raleway',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* 3D ROOM WIREFRAME */
+.room-wire{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;animation:roomPulse 9s ease-in-out infinite}
+@keyframes roomPulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* TEXT REVEAL */
+.rl{display:block}
+.rli{
+  display:block;opacity:0;
+  filter:blur(18px);
+  transform:translateY(-10px) scale(1.05);
+  transition:opacity 1s ease var(--d,0s),filter 1.25s cubic-bezier(.16,1,.3,1) var(--d,0s),transform 1.25s cubic-bezier(.16,1,.3,1) var(--d,0s)
+}
+.active .rli,.unveiled .rli{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}
+
+/* SCROLL BAR */
+.scroll-bar{position:fixed;top:0;left:0;height:1px;width:0%;background:var(--em);z-index:400;pointer-events:none;transition:width .05s linear}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content:space-between;align-items:center;padding:28px 56px;transition:background .7s,backdrop-filter .7s,-webkit-backdrop-filter .7s;opacity:0;animation:fadeIn .8s ease .15s forwards}
+nav.scrolled{background:rgba(8,8,8,.75);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:15px;letter-spacing:.3em;text-transform:uppercase}
+.nav-logo span{color:var(--em)}
+.nav-cta{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--em-l);text-decoration:none;border-bottom:1px solid rgba(74,173,130,.28);padding-bottom:2px;display:flex;align-items:center;gap:8px;transition:border-color .3s,color .3s}
+.nav-cta:hover{border-color:var(--em-l);color:var(--white)}
+
+/* HERO */
+.hero{
+  position:relative;
+  height:82vh;
+  min-height:500px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:88px 64px 48px;
+  overflow:hidden;
+  z-index:2
+}
+.hero-bg{
+  position:absolute;
+  top:-18%;left:-8%;right:-8%;bottom:-18%;
+  background:url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1800&q=80') center 55%/cover no-repeat;
+  will-change:transform;
+  transform-origin:center center
+}
+.hero-grad{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(105deg,rgba(8,8,8,.9) 0%,rgba(8,8,8,.5) 40%,rgba(8,8,8,.05) 100%),
+    linear-gradient(to top,rgba(8,8,8,.95) 0%,rgba(8,8,8,.4) 25%,rgba(8,8,8,0) 55%),
+    linear-gradient(to bottom,rgba(8,8,8,.85) 0%,rgba(8,8,8,.3) 15%,rgba(8,8,8,0) 30%)
+}
+.hero-text{position:relative;z-index:2;max-width:620px}
+.hero-eyebrow{
+  font-size:9px;letter-spacing:.48em;text-transform:uppercase;
+  color:var(--em-l);margin-bottom:24px;
+  display:flex;align-items:center;gap:14px;
+  opacity:0;animation:fadeUp .9s ease .5s forwards;
+  text-shadow:0 2px 14px rgba(8,8,8,1)
+}
+.hero-eyebrow::before{content:'';flex-shrink:0;width:28px;height:1px;background:var(--em-l);display:block}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(34px,4.8vw,68px);
+  line-height:1.12;letter-spacing:-.018em;margin-bottom:24px;
+  text-shadow:0 4px 40px rgba(8,8,8,.8)
+}
+.hero h1 em{font-style:italic;color:var(--em-l)}
+.hero-sub{
+  font-size:11px;letter-spacing:.18em;color:var(--dim);line-height:2;
+  opacity:0;animation:fadeUp .9s ease 1.9s forwards;
+  text-shadow:0 2px 20px rgba(8,8,8,1)
+}
+
+/* FLOATING SEPARATORS — zero gravity */
+.space-sep{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:20px;padding:44px 0;will-change:transform}
+.ss-arm{height:1px;background:linear-gradient(to right,transparent,var(--em),transparent);width:220px;animation:armFloat 7s ease-in-out infinite}
+.ss-arm--r{animation-delay:3.5s}
+.ss-gem{width:5px;height:5px;background:var(--em-l);transform:rotate(45deg);opacity:.65;animation:gemPulse 4.5s ease-in-out infinite}
+@keyframes armFloat{0%,100%{opacity:.22;transform:scaleX(.82) translateX(0)}50%{opacity:.6;transform:scaleX(1) translateX(0)}}
+@keyframes gemPulse{0%,100%{transform:rotate(45deg) scale(1);opacity:.5;box-shadow:0 0 0 0 rgba(74,173,130,0)}50%{transform:rotate(45deg) scale(1.7);opacity:1;box-shadow:0 0 12px 2px rgba(74,173,130,.25)}}
+
+/* CURTAIN SYSTEM */
+.curtain-section{position:relative;overflow:hidden;z-index:2}
+.curtain{position:absolute;inset:0;background:var(--black);z-index:50;transform-origin:top;transition:transform 1.15s cubic-bezier(.16,1,.3,1);will-change:transform;pointer-events:none}
+.unveiled .curtain{transform:translateY(-100%)}
+
+/* Content reveal driven by .unveiled */
+.cs-fade{opacity:0;transform:translateY(18px);transition:opacity .9s ease var(--fd,.4s),transform .9s ease var(--fd,.4s)}
+.unveiled .cs-fade{opacity:1;transform:translateY(0)}
+.cs-left{opacity:0;transform:translateX(-22px);transition:opacity .9s ease .38s,transform .9s ease .38s}
+.unveiled .cs-left{opacity:1;transform:translateX(0)}
+.cs-right{opacity:0;transform:translateX(22px);transition:opacity .9s ease .5s,transform .9s ease .5s}
+.unveiled .cs-right{opacity:1;transform:translateX(0)}
+
+/* Wipe lines */
+.line-wipe{position:absolute;inset:0;background:var(--black);transform-origin:right;transform:scaleX(1);transition:transform .9s cubic-bezier(.16,1,.3,1) var(--wd,0s)}
+.unveiled .line-wipe{transform:scaleX(0)}
+
+/* Section label */
+.section-label{font-size:9px;letter-spacing:.46em;text-transform:uppercase;color:var(--em);margin-bottom:40px;display:flex;align-items:center;gap:13px}
+.section-label::before{content:'';width:28px;height:1px;background:var(--em);display:block;animation:linePulse 4.5s ease-in-out infinite}
+@keyframes linePulse{0%,100%{transform:scaleX(1);opacity:.55}50%{transform:scaleX(1.7);opacity:1}}
+
+/* CONFRONTATION */
+.confrontation{background:var(--black);display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:80px 56px}
+.confrontation h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(32px,3.6vw,50px);line-height:1.14;letter-spacing:-.01em;margin-bottom:44px}
+.confrontation h2 em{font-style:italic;color:var(--em-l)}
+.conf-lines{display:flex;flex-direction:column}
+.conf-line{position:relative;overflow:hidden;font-size:12.5px;letter-spacing:.04em;color:var(--dim);line-height:1.75;padding:15px 15px 15px 18px;border-left:1px solid rgba(45,122,90,.18);transition:border-color .3s,color .3s}
+.conf-line:hover{border-color:var(--em);color:var(--white)}
+.conf-right{position:relative;height:560px}
+.conf-right img{width:100%;height:100%;object-fit:cover;filter:brightness(.8) contrast(1.06)}
+.conf-right::after{content:'';position:absolute;inset:0;border:1px solid rgba(45,122,90,.16);pointer-events:none}
+.img-caption{position:absolute;bottom:10px;right:12px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(45,122,90,.42)}
+
+/* VR SECTION */
+.vr-section{background:linear-gradient(135deg,#080808 0%,#0c1a12 50%,#080808 100%);padding:100px 56px;text-align:center}
+.vr-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(45,122,90,.13) 0%,transparent 68%);pointer-events:none;animation:glowPulse 6s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.75}50%{transform:translate(-50%,-50%) scale(1.13);opacity:.3}}
+.vr-inner{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.vr-inner h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5vw,68px);line-height:1.14;letter-spacing:-.01em;margin-bottom:44px}
+.vr-body{font-size:13px;letter-spacing:.08em;color:var(--dim);line-height:2.4;margin-bottom:44px}
+.vr-tag{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--em);display:flex;align-items:center;justify-content:center;gap:16px}
+.vr-tag::before,.vr-tag::after{content:'';width:36px;height:1px;background:var(--em);opacity:.45;animation:linePulse 4.5s ease-in-out infinite}
+.vr-tag::after{animation-delay:2.25s}
+
+/* DESIRE */
+.desire{background:var(--deep);text-align:center;padding:90px 56px}
+.desire-inner{max-width:760px;margin:0 auto}
+.desire h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5vw,68px);line-height:1.14;letter-spacing:-.01em}
+.desire h2 em{font-style:italic;color:var(--em-l)}
+.desire-divider{width:0;height:1px;background:var(--em);margin:38px auto;opacity:0;transition:width 1.1s cubic-bezier(.16,1,.3,1) .7s,opacity .6s ease .7s}
+.unveiled .desire-divider{width:72px;opacity:.55}
+.desire p{font-size:13px;letter-spacing:.08em;color:var(--dim);line-height:2.3;max-width:490px;margin:0 auto}
+.desire p em{font-style:italic;color:var(--em-l)}
+
+/* SERVICES SECTION */
+.services-section{background:var(--black);padding:90px 56px;border-top:1px solid rgba(45,122,90,.1);border-bottom:1px solid rgba(45,122,90,.1);position:relative;z-index:2}
+.services-inner{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;gap:0;max-width:1100px;margin:0 auto}
+.svc-divider{background:linear-gradient(to bottom,transparent,rgba(45,122,90,.25),transparent);width:1px;margin:0 40px}
+.svc-block{padding:0 12px;display:flex;flex-direction:column;gap:16px;cursor:default}
+.svc-block:hover .svc-name{color:var(--em-l)}
+.svc-block:hover .svc-num{opacity:1}
+.svc-num{font-family:'Electrolize',monospace;font-size:10px;letter-spacing:.38em;color:var(--em);opacity:.5;transition:opacity .4s}
+.svc-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(28px,2.8vw,40px);letter-spacing:-.01em;color:var(--white);line-height:1;transition:color .4s}
+.svc-desc{font-size:11px;letter-spacing:.08em;color:var(--dim);line-height:1.9;max-width:240px}
+@media(max-width:900px){
+  .services-section{padding:60px 22px}
+  .services-inner{grid-template-columns:1fr;gap:0}
+  .svc-divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(45,122,90,.25),transparent);margin:32px 0}
+  .svc-block{padding:0}
+}
+
+/* PORTFOLIO */
+.portfolio-section{position:relative;height:200vh;background:var(--black);z-index:2}
+.portfolio-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:44px}
+.portfolio-header{padding:0 56px;display:flex;align-items:center;gap:13px;font-size:9px;letter-spacing:.46em;text-transform:uppercase;color:var(--em);flex-shrink:0;opacity:0;transform:translateY(10px);transition:opacity .7s,transform .7s}
+.portfolio-header.active{opacity:1;transform:translateY(0)}
+.portfolio-header::before{content:'';width:28px;height:1px;background:var(--em);display:block;animation:linePulse 4.5s ease-in-out infinite}
+.portfolio-track{display:flex;gap:18px;padding:0 56px;will-change:transform;flex-shrink:0}
+.p-item{flex:0 0 420px;height:60vh;position:relative;overflow:hidden}
+.p-item img{width:100%;height:100%;object-fit:cover;filter:brightness(.76) contrast(1.06);transform:scale(1.05);transition:transform 1s cubic-bezier(.16,1,.3,1),filter 1s}
+.p-item:hover img{transform:scale(1);filter:brightness(.88)}
+.p-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.8) 0%,transparent 55%);display:flex;align-items:flex-end;padding:26px}
+.p-label{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--em-l)}
+
+/* STATS */
+.stats{padding:52px;display:flex;justify-content:center;background:rgba(45,122,90,.05);position:relative;z-index:2}
+.stat-item{text-align:center;padding:28px 56px;opacity:0;transform:translateY(10px);transition:opacity .7s,transform .7s}
+.stat-item.active{opacity:1;transform:translateY(0)}
+.stat-number{font-family:'Electrolize',monospace;font-size:46px;font-weight:700;color:var(--em);line-height:1;margin-bottom:10px;letter-spacing:-.02em}
+.stat-label{font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--dim)}
+
+/* PROOF */
+.proof{background:var(--deep);padding:80px 56px}
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1100px}
+.proof-card{padding-top:32px;border-top:1px solid rgba(45,122,90,.15)}
+.proof-card:nth-child(1){--fd:.38s}.proof-card:nth-child(2){--fd:.56s}.proof-card:nth-child(3){--fd:.74s}
+.proof-card-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(16px,1.6vw,20px);line-height:1.7;color:var(--white);margin-bottom:20px}
+.proof-card-author{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--em);display:flex;align-items:center;gap:11px}
+.proof-card-author::before{content:'';width:22px;height:1px;background:var(--em);display:block}
+
+/* CTA */
+.cta-section{position:relative;min-height:68vh;padding:100px 0;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:2}
+.cta-bg{position:absolute;top:-18%;left:-8%;right:-8%;bottom:-18%;background:linear-gradient(to bottom,rgba(8,8,8,.55) 0%,rgba(8,8,8,.25) 50%,rgba(8,8,8,.92) 100%),url('https://images.unsplash.com/photo-1600210491892-03d54730d73a?w=1800&q=80') center/cover no-repeat;will-change:transform}
+.cta-inner{position:relative;z-index:2;text-align:center;max-width:680px;padding:0 36px}
+.cta-inner h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(38px,5vw,68px);line-height:1.14;letter-spacing:-.01em;margin-bottom:18px}
+.cta-inner h2 em{font-style:italic;color:var(--em-l)}
+.cta-sub{font-size:10px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase;margin-bottom:48px;opacity:0;transition:opacity .9s ease .55s}
+.cta-inner.active .cta-sub{opacity:1}
+.cta-btn{display:inline-block;padding:17px 50px;background:transparent;border:1px solid var(--em);color:var(--em-l);font-family:'Raleway',sans-serif;font-weight:300;font-size:10px;letter-spacing:.4em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;opacity:0;transition:opacity .9s ease .82s,color .4s}
+.cta-inner.active .cta-btn{opacity:1}
+.cta-btn::before{content:'';position:absolute;inset:0;background:var(--em);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.cta-btn:hover::before{transform:scaleX(1)}
+.cta-btn:hover{color:var(--black)}
+.cta-btn span{position:relative;z-index:1;display:flex;align-items:center;gap:9px;justify-content:center}
+.cta-note{margin-top:22px;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:rgba(45,122,90,.46);opacity:0;transition:opacity .9s ease 1.1s}
+.cta-inner.active .cta-note{opacity:1}
+
+/* FOOTER */
+footer{padding:40px 56px;border-top:1px solid rgba(45,122,90,.1);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
+.footer-logo span{color:var(--em)}
+.footer-right{font-size:9px;letter-spacing:.25em;color:rgba(45,122,90,.4);text-transform:uppercase}
+
+/* FLOAT WA */
+.float-wa{position:fixed;bottom:30px;right:30px;z-index:300;display:flex;align-items:center;gap:9px;padding:13px 20px;background:rgba(8,8,8,.94);border:1px solid rgba(45,122,90,.4);color:var(--em-l);font-family:'Raleway',sans-serif;font-size:8px;font-weight:300;letter-spacing:.38em;text-transform:uppercase;text-decoration:none;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .5s,transform .5s,border-color .3s}
+.float-wa.show{opacity:1;pointer-events:all;transform:translateY(0)}
+.float-wa:hover{border-color:var(--em);color:var(--white)}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:20px 22px}
+  .hero{height:78vh;min-height:440px;padding:76px 22px 40px}
+  .hero h1{font-size:clamp(32px,8.5vw,48px)}
+  .hero-text{max-width:100%}
+  .confrontation{grid-template-columns:1fr;gap:36px;padding:56px 22px}
+  .conf-right{height:260px}
+  .vr-section{padding:64px 22px}
+  .desire{padding:64px 22px}
+  .services-strip{gap:14px;padding:28px 22px;flex-wrap:wrap}
+  .stats{padding:32px 22px}
+  .proof{padding:60px 22px}
+  .proof-grid{grid-template-columns:1fr;gap:28px}
+  footer{padding:28px 22px;flex-direction:column;gap:10px;text-align:center}
+  .cta-section{min-height:auto;padding:72px 0}
+  .portfolio-section{height:auto}
+  .portfolio-sticky{position:relative;height:auto;padding:56px 0;gap:22px}
+  .portfolio-track{padding:0 22px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .portfolio-track::-webkit-scrollbar{display:none}
+  .p-item{flex:0 0 78vw;height:52vw}
+  .portfolio-header{padding:0 22px}
+  .float-wa{bottom:18px;right:16px;padding:11px 14px}
+  .space-sep{padding:24px 0}
+  .ss-arm{width:90px}
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-bar" id="scrollBar"></div>
+
+<a href="https://wa.me/971XXXXXXXXX?text=Hi%2C%20I%20came%20across%20Emerald%20House%20and%20I%27d%20like%20to%20learn%20more." class="float-wa" id="floatWa" target="_blank">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Consult
+</a>
+
+<nav id="mainNav">
+  <div class="nav-logo">Emerald <span>House</span></div>
+  <a href="#consult" class="nav-cta">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Request Consultation
+  </a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-text" id="heroText">
+    <div class="hero-eyebrow">Dubai · Interior Design</div>
+    <h1 id="heroH1">
+      <span class="rl" style="--d:.7s"><span class="rli">You bought</span></span>
+      <span class="rl" style="--d:.9s"><span class="rli">the property.</span></span>
+      <span class="rl" style="--d:1.1s"><span class="rli"><em>It still doesn't</em></span></span>
+      <span class="rl" style="--d:1.3s"><span class="rli"><em>feel like yours.</em></span></span>
+    </h1>
+    <p class="hero-sub">We know why. And we know exactly how to change that.</p>
+  </div>
+</section>
+
+<!-- ═══ SEPARATOR ═══ -->
+<div class="space-sep" id="sep1">
+  <div class="ss-arm ss-arm--l"></div>
+  <div class="ss-gem"></div>
+  <div class="ss-arm ss-arm--r"></div>
+</div>
+
+<!-- ═══ CONFRONTATION ═══ -->
+<div class="confrontation curtain-section" id="secConfront">
+  <div class="curtain"></div>
+  <div class="conf-left cs-left">
+    <div class="section-label">The Truth</div>
+    <h2>
+      <span class="rl" style="--d:.05s"><span class="rli">You've seen</span></span>
+      <span class="rl" style="--d:.2s"><span class="rli">the portfolios.</span></span>
+      <span class="rl" style="--d:.35s"><span class="rli">You felt</span></span>
+      <span class="rl" style="--d:.5s"><span class="rli"><em>nothing.</em></span></span>
+    </h2>
+    <div class="conf-lines">
+      <div class="conf-line"><span class="line-wipe" style="--wd:.32s"></span>Same pitch. Same portfolio. Same generic moodboards.</div>
+      <div class="conf-line"><span class="line-wipe" style="--wd:.5s"></span>You described your taste. They handed you back a hotel lobby.</div>
+      <div class="conf-line"><span class="line-wipe" style="--wd:.68s"></span>You've heard the stories. 800,000 AED spent. Wrong result. Designer vanished.</div>
+      <div class="conf-line"><span class="line-wipe" style="--wd:.86s"></span>The fear isn't the number. It's spending this much and still feeling nothing when you walk in.</div>
+    </div>
+  </div>
+  <div class="conf-right cs-right">
+    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=900&q=80" alt="Interior">
+    <div class="img-caption">Palm Jumeirah · Private Residence</div>
+  </div>
+</div>
+
+<!-- ═══ SEPARATOR ═══ -->
+<div class="space-sep" id="sep2">
+  <div class="ss-arm ss-arm--l"></div>
+  <div class="ss-gem"></div>
+  <div class="ss-arm ss-arm--r"></div>
+</div>
+
+<!-- ═══ VR SECTION ═══ -->
+<div class="vr-section curtain-section" id="secVr">
+  <div class="curtain"></div>
+
+  <!-- 3D PERSPECTIVE ROOM WIREFRAME — VP=(600,300) -->
+  <svg class="room-wire" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g stroke="rgba(74,173,130,0.28)" stroke-width="0.9" fill="none" stroke-linecap="square">
+
+      <!-- ══ ROOM SHELL ══ -->
+      <rect x="370" y="100" width="460" height="350"/>
+      <polyline points="255,0 370,100 370,450 0,680"/>
+      <polyline points="945,0 830,100 830,450 1200,680"/>
+      <line x1="0" y1="680" x2="1200" y2="680"/>
+
+      <!-- ══ BACK WALL DETAIL: window frame ══ -->
+      <rect x="468" y="148" width="264" height="190"/>
+      <line x1="600" y1="148" x2="600" y2="338"/>
+      <line x1="468" y1="243" x2="732" y2="243"/>
+      <rect x="482" y="162" width="112" height="74"/>
+      <rect x="606" y="162" width="112" height="74"/>
+      <rect x="482" y="256" width="112" height="70"/>
+      <rect x="606" y="256" width="112" height="70"/>
+
+      <!-- ══ BACK WALL DETAIL: panel trim ══ -->
+      <line x1="370" y1="408" x2="830" y2="408"/>
+      <line x1="370" y1="430" x2="830" y2="430"/>
+      <line x1="370" y1="360" x2="830" y2="360"/>
+
+      <!-- ══ FLOOR GRID — horizontal ══ -->
+      <line x1="37" y1="657" x2="1163" y2="657"/>
+      <line x1="93" y1="622" x2="1107" y2="622"/>
+      <line x1="167" y1="577" x2="1033" y2="577"/>
+      <line x1="241" y1="531" x2="959" y2="531"/>
+      <line x1="303" y1="491" x2="897" y2="491"/>
+      <line x1="344" y1="466" x2="856" y2="466"/>
+
+      <!-- ══ FLOOR GRID — receding ══ -->
+      <line x1="300" y1="680" x2="482" y2="450"/>
+      <line x1="450" y1="680" x2="541" y2="450"/>
+      <line x1="600" y1="680" x2="600" y2="450"/>
+      <line x1="750" y1="680" x2="659" y2="450"/>
+      <line x1="900" y1="680" x2="718" y2="450"/>
+
+      <!-- ══ PENDANT LIGHT ══ -->
+      <line x1="600" y1="100" x2="600" y2="174"/>
+      <polygon points="584,174 616,174 611,190 589,190"/>
+      <line x1="589,190" x2="611,190" y1="190" y2="190"/>
+
+      <!-- ══ SOFA — LEFT WALL (seat faces room) ══ -->
+      <!-- floor footprint -->
+      <polygon points="232,540 309,490 386,490 330,540"/>
+      <!-- seat top surface -->
+      <polygon points="232,488 309,438 386,438 330,488"/>
+      <!-- near arm face (faces viewer) -->
+      <polygon points="232,540 330,540 330,488 232,488"/>
+      <!-- far arm face -->
+      <polygon points="309,490 386,490 386,438 309,438"/>
+      <!-- room-facing seat side -->
+      <polygon points="330,540 386,490 386,438 330,488"/>
+      <!-- back rest face (room-facing) -->
+      <polygon points="232,488 309,438 309,385 232,435"/>
+      <!-- back rest near arm cap -->
+      <line x1="232" y1="435" x2="232" y2="540"/>
+      <!-- back rest far arm top edge -->
+      <line x1="309" y1="385" x2="309" y2="490"/>
+      <!-- seat cushion seams (horizontal, constant y per perspective surface) -->
+      <line x1="258" y1="471" x2="349" y2="471"/>
+      <line x1="283" y1="455" x2="369" y2="455"/>
+      <!-- back rest cushion seams (vertical on face) -->
+      <line x1="258" y1="471" x2="258" y2="418"/>
+      <line x1="283" y1="455" x2="283" y2="402"/>
+      <!-- legs -->
+      <line x1="232" y1="540" x2="231" y2="552"/>
+      <line x1="330" y1="540" x2="329" y2="552"/>
+      <line x1="309" y1="490" x2="308" y2="502"/>
+      <line x1="386" y1="490" x2="387" y2="502"/>
+
+      <!-- ══ FLOOR LAMP — near sofa ══ -->
+      <line x1="178" y1="585" x2="178" y2="488"/>
+      <polygon points="164,486 192,485 188,496 170,497"/>
+      <line x1="170" y1="585" x2="186" y2="585"/>
+      <line x1="178" y1="585" x2="178" y2="596"/>
+      <line x1="170" y1="596" x2="186" y2="596"/>
+
+      <!-- ══ ARMCHAIR — RIGHT WALL ══ -->
+      <!-- floor footprint -->
+      <polygon points="922,510 980,548 891,556 846,518"/>
+      <!-- seat top -->
+      <polygon points="922,465 980,503 891,511 846,473"/>
+      <!-- left face (room-facing) -->
+      <polygon points="846,518 891,556 891,511 846,473"/>
+      <!-- far face (toward back wall) -->
+      <polygon points="922,510 846,518 846,473 922,465"/>
+      <!-- back rest face (room-facing) -->
+      <polygon points="846,473 922,465 922,375 846,383"/>
+      <!-- back rest near arm vertical cap -->
+      <line x1="846" y1="383" x2="846" y2="518"/>
+      <!-- back rest far arm vertical cap -->
+      <line x1="922" y1="375" x2="922" y2="510"/>
+      <!-- seat cushion seam -->
+      <line x1="846" y1="492" x2="922" y2="487"/>
+      <!-- back rest cushion seam (horizontal mid-height) -->
+      <line x1="846" y1="428" x2="922" y2="420"/>
+      <!-- legs -->
+      <line x1="846" y1="556" x2="845" y2="568"/>
+      <line x1="891" y1="556" x2="892" y2="568"/>
+      <line x1="922" y1="548" x2="923" y2="560"/>
+      <line x1="980" y1="548" x2="981" y2="560"/>
+
+      <!-- ══ COFFEE TABLE — center ══ -->
+      <!-- top surface -->
+      <polygon points="485,592 715,592 728,627 472,627"/>
+      <!-- front face -->
+      <polygon points="472,627 728,627 730,638 470,638"/>
+      <!-- left edge converging to VP -->
+      <line x1="485" y1="592" x2="472" y2="627"/>
+      <!-- right edge -->
+      <line x1="715" y1="592" x2="728" y2="627"/>
+      <!-- legs -->
+      <line x1="490" y1="638" x2="489" y2="658"/>
+      <line x1="508" y1="638" x2="507" y2="657"/>
+      <line x1="706" y1="638" x2="707" y2="657"/>
+      <line x1="722" y1="638" x2="723" y2="658"/>
+      <!-- lower shelf -->
+      <polygon points="494,648 706,645 708,652 492,655"/>
+
+      <!-- ══ RUG — under coffee table ══ -->
+      <polygon points="430,572 760,572 809,655 378,655"/>
+      <!-- inner border -->
+      <polygon points="450,582 740,582 770,642 418,642"/>
+
+      <!-- ══ SIDE CONSOLE — back wall right ══ -->
+      <rect x="702" y="388" width="118" height="8"/>
+      <polygon points="702,396 820,396 822,408 700,408"/>
+      <line x1="710" y1="408" x2="709" y2="430"/>
+      <line x1="812" y1="408" x2="813" y2="430"/>
+      <!-- object on console (vase silhouette) -->
+      <line x1="748" y1="388" x2="748" y2="372"/>
+      <line x1="768" y1="388" x2="768" y2="372"/>
+      <polygon points="742,372 774,371 772,366 744,367"/>
+      <line x1="748" y1="376" x2="768" y2="376"/>
+
+    </g>
+  </svg>
+
+  <div class="vr-glow"></div>
+  <div class="vr-inner">
+    <div class="section-label cs-fade" style="justify-content:center;margin-bottom:36px;--fd:.28s">The Difference</div>
+    <h2>
+      <span class="rl" style="--d:.32s"><span class="rli">We don't ask you</span></span>
+      <span class="rl" style="--d:.5s"><span class="rli">to imagine it.</span></span>
+    </h2>
+    <p class="vr-body cs-fade" style="--fd:.55s">
+      You walk through your finished space before we touch a single wall.<br><br>
+      Every room. Every material. Every finish.<br>
+      Approved by <em style="font-style:italic;color:var(--em-l)">you.</em><br><br>
+      The 800,000 AED mistake doesn't happen here.
+    </p>
+    <div class="vr-tag cs-fade" style="--fd:.85s">3D Visualization · VR Walkthrough</div>
+  </div>
+</div>
+
+<!-- ═══ SEPARATOR ═══ -->
+<div class="space-sep" id="sep3">
+  <div class="ss-arm ss-arm--l"></div>
+  <div class="ss-gem"></div>
+  <div class="ss-arm ss-arm--r"></div>
+</div>
+
+<!-- ═══ DESIRE ═══ -->
+<div class="desire curtain-section" id="secDesire">
+  <div class="curtain"></div>
+  <div class="desire-inner">
+    <h2>
+      <span class="rl" style="--d:.08s"><span class="rli">You want to walk in</span></span>
+      <span class="rl" style="--d:.24s"><span class="rli">and <em>stop.</em></span></span>
+    </h2>
+    <div class="desire-divider"></div>
+    <p class="cs-fade" style="--fd:.82s">Not because it's impressive.<br>Because it's unmistakably <em>you.</em><br><br>
+    Every material chosen like it was made for <em>your life.</em><br>
+    Every room saying something about <em>who you are</em> —<br>
+    without you having to explain it.<br><br>
+    And the entire process handled.<br>
+    Completely. Silently. Perfectly.</p>
+  </div>
+</div>
+
+<!-- ═══ SERVICES ═══ -->
+<section class="services-section curtain-section">
+  <div class="curtain"></div>
+  <div class="services-inner">
+    <div class="svc-block cs-fade" style="--fd:.18s">
+      <div class="svc-num">01</div>
+      <div class="svc-name">Interior Design</div>
+      <div class="svc-desc">Spaces that carry your identity before you say a word.</div>
+    </div>
+    <div class="svc-divider"></div>
+    <div class="svc-block cs-fade" style="--fd:.38s">
+      <div class="svc-num">02</div>
+      <div class="svc-name">Renovation</div>
+      <div class="svc-desc">Complete transformation. Down to the structure if needed.</div>
+    </div>
+    <div class="svc-divider"></div>
+    <div class="svc-block cs-fade" style="--fd:.58s">
+      <div class="svc-num">03</div>
+      <div class="svc-name">Furnishing</div>
+      <div class="svc-desc">Curated pieces. Nothing generic. Nothing borrowed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PORTFOLIO ═══ -->
+<div class="portfolio-section" id="portfolioSection">
+  <div class="portfolio-sticky">
+    <div class="portfolio-header" id="portfolioHeader">Selected Work</div>
+    <div class="portfolio-track" id="portfolioTrack">
+      <div class="p-item"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80" alt=""><div class="p-overlay"><div class="p-label">Emirates Hills · Villa</div></div></div>
+      <div class="p-item"><img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&q=80" alt=""><div class="p-overlay"><div class="p-label">Downtown Dubai · Penthouse</div></div></div>
+      <div class="p-item"><img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=800&q=80" alt=""><div class="p-overlay"><div class="p-label">Arabian Ranches · Residence</div></div></div>
+      <div class="p-item"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt=""><div class="p-overlay"><div class="p-label">Palm Jumeirah · Villa</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats">
+  <div class="stat-item" id="statItem">
+    <div class="stat-number" id="statNum">120+</div>
+    <div class="stat-label">Projects Completed</div>
+  </div>
+</div>
+
+<!-- ═══ PROOF ═══ -->
+<div class="proof curtain-section" id="secProof">
+  <div class="curtain"></div>
+  <div class="section-label cs-fade" style="margin-bottom:52px;--fd:.3s">What They Say</div>
+  <div class="proof-grid">
+    <div class="proof-card cs-fade">
+      <div class="proof-card-quote">"Transformed our vision into a beautiful reality. Their attention to detail and dedication to quality were evident in every aspect of the project."</div>
+      <div class="proof-card-author">Amir Karami · Dubai</div>
+    </div>
+    <div class="proof-card cs-fade">
+      <div class="proof-card-quote">"Their innovative approach and commitment turned the villa into a beautiful place to call home."</div>
+      <div class="proof-card-author">Negin Saberi · Dubai</div>
+    </div>
+    <div class="proof-card cs-fade">
+      <div class="proof-card-quote">"Professional, reliable, skilled — exceeded our expectations at every turn. Our dream home is now a beautiful reality."</div>
+      <div class="proof-card-author">Brian Moten · Dubai</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section" id="consult">
+  <div class="cta-bg" id="ctaBg"></div>
+  <div class="cta-inner" id="ctaInner">
+    <h2>
+      <span class="rl" style="--d:0s"><span class="rli">Is your space ready</span></span>
+      <span class="rl" style="--d:.18s"><span class="rli">to match <em>your life?</em></span></span>
+    </h2>
+    <p class="cta-sub">One conversation. Twenty minutes.<br>You walk away with a concept, a budget, and a decision you're certain of.</p>
+    <a href="https://wa.me/971XXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20request%20a%20consultation%20with%20Emerald%20House." class="cta-btn" target="_blank">
+      <span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Request a Consultation
+      </span>
+    </a>
+    <div class="cta-note">We take limited projects per quarter.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Emerald <span>House</span> · Interior Design</div>
+  <div class="footer-right">Dubai, UAE</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+'use strict';
+
+/* ═══ LENIS ═══ */
+let lenis = null;
+try {
+  lenis = new Lenis({
+    duration: 1.75,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    wheelMultiplier: 0.88
+  });
+} catch(e) {}
+
+
+/* ═══ DOM REFS ═══ */
+const heroBg  = document.getElementById('heroBg');
+const ctaBg   = document.getElementById('ctaBg');
+const scrollBar = document.getElementById('scrollBar');
+const floatWa = document.getElementById('floatWa');
+const mainNav = document.getElementById('mainNav');
+const portfolioSection = document.getElementById('portfolioSection');
+const portfolioTrack   = document.getElementById('portfolioTrack');
+const consultEl = document.getElementById('consult');
+
+/* ═══ SEPARATOR PARALLAX DATA ═══ */
+const seps = Array.from(document.querySelectorAll('.space-sep'));
+
+/* ═══ SINGLE RAF LOOP ═══ */
+function tick(ts) {
+  if (lenis) lenis.raf(ts);
+
+  const sy  = lenis ? lenis.scroll : window.scrollY;
+  const vh  = window.innerHeight;
+  const mob = window.innerWidth <= 900;
+
+  /* HERO BG — alive: drift + slow zoom + scroll parallax */
+  if (heroBg) {
+    const t  = ts * .00022;
+    const dx = Math.sin(t * .52) * 10;
+    const dy = Math.cos(t * .36) * 7 + sy * .22;
+    const sc = 1.09 + Math.sin(t * .2) * .02;
+    heroBg.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sc + ')';
+  }
+
+  /* CTA BG — parallax */
+  if (ctaBg && consultEl) {
+    const rel = (sy - consultEl.offsetTop) * .16;
+    ctaBg.style.transform = 'translateY(' + rel + 'px)';
+  }
+
+  /* SEPARATORS — subtle float with scroll */
+  for (let i = 0; i < seps.length; i++) {
+    const s = seps[i];
+    const drift = (sy - s.offsetTop) * .028;
+    s.style.transform = 'translateY(' + drift + 'px)';
+  }
+
+  /* PORTFOLIO HORIZONTAL */
+  if (!mob && portfolioSection && portfolioTrack) {
+    const p    = Math.max(0, Math.min(1, (sy - portfolioSection.offsetTop) / (portfolioSection.offsetHeight - vh)));
+    const maxX = -(portfolioTrack.scrollWidth - window.innerWidth + 112);
+    portfolioTrack.style.transform = 'translateX(' + (p * maxX) + 'px)';
+  }
+
+  /* SCROLL BAR */
+  if (scrollBar) {
+    const max = document.body.scrollHeight - vh;
+    scrollBar.style.width = Math.min(100, (sy / max) * 100) + '%';
+  }
+
+  /* FLOAT BUTTON */
+  if (floatWa) sy > vh * .28 ? floatWa.classList.add('show') : floatWa.classList.remove('show');
+
+  /* NAV glass on scroll */
+  if (mainNav) sy > 60 ? mainNav.classList.add('scrolled') : mainNav.classList.remove('scrolled');
+
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+/* ═══ HERO REVEAL — choreographed sequence ═══ */
+setTimeout(() => {
+  const ht = document.getElementById('heroText');
+  if (ht) ht.classList.add('active');
+}, 60);
+
+/* ═══ CURTAIN SECTIONS — one observer per section ═══ */
+document.querySelectorAll('.curtain-section').forEach(section => {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { section.classList.add('unveiled'); io.unobserve(section); }
+    });
+  }, { threshold: 0.12 });
+  io.observe(section);
+});
+
+/* ═══ CTA SECTION ═══ */
+const ctaInner = document.getElementById('ctaInner');
+if (ctaInner) {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        ctaInner.classList.add('active');
+        // activate blur-materialize for cta h2
+        ctaInner.querySelectorAll('.rl .rli').forEach(rli => {
+          // CSS handles via .active on ancestor — manually set parent active
+        });
+        ctaInner.classList.add('active');
+        // Trigger h2 text assembly
+        const h2 = ctaInner.querySelector('h2');
+        if (h2) h2.closest('.cta-inner').classList.add('active');
+      }
+    });
+  }, { threshold: 0.2 }).observe(ctaInner);
+}
+
+// CTA h2 text assembly via separate observer
+const ctaH2 = ctaInner ? ctaInner.querySelector('h2') : null;
+if (ctaH2) {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { ctaH2.classList.add('active'); } });
+  }, { threshold: 0.2 }).observe(ctaH2);
+}
+
+/* ═══ PORTFOLIO HEADER ═══ */
+const portHeader = document.getElementById('portfolioHeader');
+if (portHeader) {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) portHeader.classList.add('active'); });
+  }, { threshold: 0.1 }).observe(portHeader);
+}
+
+/* ═══ STATS COUNTER ═══ */
+const statItem = document.getElementById('statItem');
+const statNum  = document.getElementById('statNum');
+if (statItem) {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        statItem.classList.add('active');
+        if (statNum) {
+          let v = 0;
+          (function step() {
+            v = Math.min(v + 3, 120);
+            statNum.textContent = v + '+';
+            if (v < 120) requestAnimationFrame(step);
+          })();
+        }
+      }
+    });
+  }, { threshold: 0.35 }).observe(statItem);
+}
+</script>
+</body>
+</html>
