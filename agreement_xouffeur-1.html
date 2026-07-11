@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Agreement — BlaqScale x Xouffeur Driver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Cinzel:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root { --black:#000; --red:#9B1B2A; --white:#F0EDE8; }
+
+html, body {
+  width:100%; min-height:100%;
+  background:var(--black); color:var(--white);
+  font-family:'Cormorant Garamond', serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* GRAIN */
+.grain {
+  position:fixed; inset:0; pointer-events:none; z-index:100;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* AMBIENT */
+.ambient {
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:80vw; height:80vh;
+  background:radial-gradient(ellipse, rgba(155,27,42,0.07) 0%, transparent 65%);
+  pointer-events:none; z-index:0;
+  animation:ambBreathe 5s ease-in-out infinite;
+}
+@keyframes ambBreathe { 0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(.95)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.05)} }
+
+/* SCAN LINE */
+#scan-line {
+  position:fixed; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, transparent 0%, rgba(155,27,42,0.6) 20%, rgba(196,18,48,0.9) 50%, rgba(155,27,42,0.6) 80%, transparent 100%);
+  box-shadow:0 0 12px rgba(155,27,42,0.8), 0 0 24px rgba(155,27,42,0.3);
+  pointer-events:none; z-index:150;
+  top:0; opacity:0;
+  animation:scanDown 1.4s cubic-bezier(0.4,0,0.6,1) forwards 0.2s;
+}
+@keyframes scanDown {
+  0%   { transform:translateY(0); opacity:0; }
+  5%   { opacity:1; }
+  95%  { opacity:1; }
+  100% { transform:translateY(100vh); opacity:0; }
+}
+
+/* WRAPPER */
+.wrapper {
+  position:relative; z-index:10;
+  max-width:720px; width:100%;
+  margin:0 auto;
+  padding:80px clamp(24px,6vw,60px) 100px;
+}
+
+/* HEADER */
+.doc-header {
+  text-align:center;
+  margin-bottom:72px;
+  opacity:0;
+  animation:fadeUp 1s ease forwards 0.5s;
+}
+
+.brand-label {
+  font-family:'Cinzel', serif;
+  font-size:clamp(9px,2vw,10px);
+  letter-spacing:0.6em;
+  color:var(--red);
+  -webkit-text-stroke:0.4px var(--red);
+  display:block;
+  margin-bottom:28px;
+}
+
+.doc-title {
+  font-weight:300;
+  font-size:clamp(36px,9vw,58px);
+  line-height:1.05;
+  margin-bottom:8px;
+}
+.doc-title em {
+  font-style:italic;
+  color:var(--red);
+}
+
+.doc-subtitle {
+  font-family:'Cinzel', serif;
+  font-size:clamp(9px,2vw,10px);
+  letter-spacing:0.45em;
+  color:rgba(240,237,232,0.35);
+  margin-top:20px;
+  display:block;
+}
+
+.accent-line {
+  width:36px; height:1px;
+  background:var(--red);
+  margin:32px auto 0;
+  animation:accentReveal 0.8s ease forwards 1s, accentPulse 3s ease-in-out infinite 2.5s;
+  opacity:0; transform:scaleX(0);
+}
+@keyframes accentReveal { to{opacity:1;transform:scaleX(1)} }
+@keyframes accentPulse { 0%,100%{transform:scaleX(1);opacity:1} 40%{transform:scaleX(1.8);opacity:.5} 65%{transform:scaleX(.8);opacity:1} }
+
+/* PARTIES */
+.parties {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:rgba(155,27,42,0.2);
+  margin-bottom:64px;
+  opacity:0;
+  animation:fadeUp 1s ease forwards 0.9s;
+}
+.party {
+  background:var(--black);
+  padding:28px 24px;
+}
+.party-role {
+  font-family:'Cinzel', serif;
+  font-size:8px;
+  letter-spacing:0.5em;
+  color:var(--red);
+  margin-bottom:12px;
+  display:block;
+}
+.party-name {
+  font-size:clamp(17px,4vw,20px);
+  font-weight:300;
+  line-height:1.4;
+  color:var(--white);
+}
+.party-company {
+  font-size:clamp(13px,3vw,14px);
+  color:rgba(240,237,232,0.4);
+  margin-top:4px;
+  font-style:italic;
+}
+
+/* DATE */
+.doc-date {
+  font-family:'Cinzel', serif;
+  font-size:8px;
+  letter-spacing:0.45em;
+  color:rgba(240,237,232,0.25);
+  text-align:center;
+  margin-bottom:72px;
+  display:block;
+  opacity:0;
+  animation:fadeUp 0.8s ease forwards 1.1s;
+}
+
+/* SECTIONS */
+.section {
+  margin-bottom:56px;
+  opacity:0;
+  transform:translateY(20px);
+}
+.section.visible {
+  opacity:1;
+  transform:translateY(0);
+  transition:opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+
+.divider-line {
+  display:block; height:1px; margin-bottom:28px;
+  background:linear-gradient(90deg, rgba(155,27,42,0.95) 0%, rgba(155,27,42,0.15) 50%, transparent 100%);
+  transform:scaleX(0); transform-origin:left; opacity:0;
+  transition:transform 1.2s cubic-bezier(.16,1,.3,1) 0.1s, opacity 0.8s ease 0.1s;
+}
+.section.visible .divider-line { transform:scaleX(1); opacity:1; }
+
+.section-num {
+  font-family:'Cinzel', serif;
+  font-size:8px;
+  letter-spacing:0.5em;
+  color:var(--red);
+  -webkit-text-stroke:0.4px var(--red);
+  display:block;
+  margin-bottom:12px;
+}
+
+.section-title {
+  font-family:'Cinzel', serif;
+  font-size:clamp(11px,2.5vw,13px);
+  letter-spacing:0.3em;
+  color:var(--white);
+  margin-bottom:24px;
+  font-weight:400;
+}
+
+.section-body {
+  font-size:clamp(17px,4vw,19px);
+  font-weight:300;
+  line-height:1.9;
+  color:rgba(240,237,232,0.82);
+}
+.section-body strong {
+  color:var(--white);
+  font-weight:400;
+}
+.section-body em {
+  color:var(--red);
+  font-style:italic;
+}
+
+/* ITEMS LIST */
+.items {
+  list-style:none;
+  margin-top:12px;
+}
+.items li {
+  font-size:clamp(17px,4vw,19px);
+  font-weight:300;
+  line-height:1.85;
+  color:rgba(240,237,232,0.82);
+  padding:10px 0;
+  border-bottom:1px solid rgba(155,27,42,0.1);
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+}
+.items li:last-child { border-bottom:none; }
+.items li::before {
+  content:'';
+  display:block;
+  width:4px; height:4px;
+  background:var(--red);
+  border-radius:50%;
+  flex-shrink:0;
+  margin-top:11px;
+}
+.items li strong { color:var(--white); font-weight:400; }
+
+/* PAYMENT BLOCK */
+.payment-block {
+  background:linear-gradient(135deg, rgba(155,27,42,0.22) 0%, rgba(100,10,25,0.18) 50%, rgba(155,27,42,0.14) 100%);
+  border:1px solid rgba(196,40,65,0.45);
+  box-shadow:0 0 40px rgba(155,27,42,0.18) inset, 0 2px 24px rgba(155,27,42,0.1);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  padding:28px 24px;
+  margin-top:20px;
+  position:relative;
+  overflow:hidden;
+}
+.payment-block::before {
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, rgba(220,80,100,0.6), transparent);
+}
+.payment-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:12px 0;
+  border-bottom:1px solid rgba(196,40,65,0.2);
+  gap:16px;
+}
+.payment-row:last-child { border-bottom:none; }
+.payment-label {
+  font-family:'Cinzel', serif;
+  font-size:8px;
+  letter-spacing:0.4em;
+  color:rgba(240,237,232,0.6);
+}
+.payment-value {
+  font-size:clamp(17px,4vw,20px);
+  font-weight:300;
+  color:var(--white);
+  text-align:right;
+}
+.payment-value em { color:var(--red); font-style:normal; }
+
+/* SIGNATURE BLOCK */
+.signatures {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:32px;
+  margin-top:80px;
+  padding-top:48px;
+  border-top:1px solid rgba(155,27,42,0.2);
+  opacity:0;
+  animation:fadeUp 1s ease forwards 1.4s;
+}
+.sig-block { }
+.sig-role {
+  font-family:'Cinzel', serif;
+  font-size:8px;
+  letter-spacing:0.5em;
+  color:var(--red);
+  margin-bottom:8px;
+  display:block;
+}
+.sig-name {
+  font-size:clamp(16px,4vw,18px);
+  font-weight:300;
+  color:var(--white);
+  margin-bottom:4px;
+}
+.sig-company {
+  font-size:13px;
+  color:rgba(240,237,232,0.35);
+  font-style:italic;
+  margin-bottom:24px;
+}
+.sig-line {
+  width:100%; height:1px;
+  background:rgba(155,27,42,0.3);
+  margin-top:40px;
+}
+.sig-date-label {
+  font-family:'Cinzel', serif;
+  font-size:7px;
+  letter-spacing:0.4em;
+  color:rgba(240,237,232,0.2);
+  margin-top:8px;
+  display:block;
+}
+
+/* CORNER LOGO */
+.corner-logo {
+  position:fixed; top:16px; right:16px; z-index:50;
+  opacity:0;
+  animation:fadeUp 1s ease forwards 0.3s;
+  pointer-events:none;
+}
+.corner-logo img {
+  width:38px; height:38px; object-fit:contain; display:block;
+  filter:drop-shadow(0 0 6px rgba(155,27,42,0.4));
+  -webkit-mask-image:radial-gradient(ellipse 68% 68% at 50% 50%, black 30%, transparent 100%);
+  mask-image:radial-gradient(ellipse 68% 68% at 50% 50%, black 30%, transparent 100%);
+}
+
+/* FOOTER */
+.doc-footer {
+  text-align:center;
+  margin-top:72px;
+  opacity:0;
+  animation:fadeUp 1s ease forwards 1.6s;
+}
+.footer-brand {
+  font-family:'Cinzel', serif;
+  font-size:8px;
+  letter-spacing:0.6em;
+  color:rgba(155,27,42,0.4);
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+.agree-section {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(155,27,42,0.2);
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 1.8s;
+}
+.agree-label {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 0.5em;
+  color: var(--red);
+  display: block;
+  margin-bottom: 24px;
+}
+.agree-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+@media(max-width:520px){ .agree-inputs{ grid-template-columns:1fr; } }
+.agree-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(155,27,42,0.3);
+  color: var(--white);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16px,4vw,18px);
+  font-weight: 300;
+  padding: 10px 0;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+.agree-input::placeholder { color: rgba(240,237,232,0.2); }
+.agree-input:focus { border-bottom-color: var(--red); }
+.agree-btn {
+  display: block;
+  width: 100%;
+  padding: 18px 24px;
+  background: transparent;
+  border: 1px solid rgba(155,27,42,0.5);
+  color: var(--white);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(10px,2.5vw,12px);
+  letter-spacing: 0.4em;
+  cursor: pointer;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  margin-top: 8px;
+}
+.agree-btn:hover { background: rgba(155,27,42,0.1); border-color: var(--red); }
+.agree-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.agree-success {
+  display: none;
+  text-align: center;
+  padding: 32px 0;
+}
+.agree-success .check {
+  font-size: 32px;
+  color: var(--red);
+  display: block;
+  margin-bottom: 16px;
+}
+.agree-success p {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: rgba(240,237,232,0.4);
+}
+.agree-error {
+  display: none;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--red);
+  margin-top: 12px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="corner-logo"><img src="../blaqscale.jpg" alt="BlaqScale"></div>
+<div class="grain"></div>
+<div class="ambient"></div>
+<div id="scan-line"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header class="doc-header">
+    <span class="brand-label">BLAQSCALE</span>
+    <h1 class="doc-title">Revenue<br><em>Partnership</em></h1>
+    <span class="doc-subtitle">Confidential — Performance Agreement</span>
+    <div class="accent-line"></div>
+  </header>
+
+  <!-- DATE -->
+  <span class="doc-date">JULY 2026</span>
+
+  <!-- PARTIES -->
+  <div class="parties">
+    <div class="party">
+      <span class="party-role">REVENUE PARTNER</span>
+      <div class="party-name">Waeven Xrysmond</div>
+      <div class="party-company">BlaqScale</div>
+    </div>
+    <div class="party">
+      <span class="party-role">CLIENT</span>
+      <div class="party-name">Asad Ali</div>
+      <div class="party-company">Xouffeur Driver<br>xouffeurdriver.com</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">01</span>
+    <div class="section-title">WHAT BLAQSCALE IS</div>
+    <p class="section-body">BlaqScale is not an agency. Not a Google Ads vendor. Not a freelancer on a retainer. BlaqScale enters this partnership as a <strong>revenue operator</strong> — fully invested in the growth of Xouffeur Driver's business with skin in the game.</p>
+    <p class="section-body" style="margin-top:24px;">The mandate is simple: <em>bring money in the door.</em> Channel selection, asset creation, funnel architecture, paid ads, landing pages, booking systems — all of it is determined by what the business actually needs, not by a predefined service package. If something needs to be built to generate revenue, BlaqScale builds it.</p>
+    <p class="section-body" style="margin-top:24px;">The only performance metric that matters is <strong>money received in Xouffeur Driver's account.</strong> Not traffic. Not leads. Not impressions. Cash in.</p>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">02</span>
+    <div class="section-title">SCOPE OF WORK</div>
+    <p class="section-body">BlaqScale will identify and execute whatever revenue-generating activities the business requires. This may include, but is not limited to:</p>
+    <ul class="items">
+      <li><span>Paid advertising campaigns — Meta Ads, Google Ads, or any channel determined to be effective for Xouffeur Driver's specific acquisition model</span></li>
+      <li><span>Landing pages and conversion-optimized web assets built to turn traffic into confirmed bookings</span></li>
+      <li><span>Booking system integration and funnel architecture designed to reduce friction between interest and payment</span></li>
+      <li><span>Ongoing optimization of all active revenue channels based on real booking and revenue data</span></li>
+    </ul>
+    <p class="section-body" style="margin-top:24px;"><strong>All assets built by BlaqScale</strong> — landing pages, booking systems, funnels, ad creatives, and any other deliverable — are provided to Xouffeur Driver <em>at no additional cost</em> beyond the terms in Section 03. These assets transfer to Xouffeur Driver upon delivery.</p>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">03</span>
+    <div class="section-title">COMPENSATION</div>
+    <p class="section-body">This is a performance structure. BlaqScale earns when Xouffeur Driver earns.</p>
+    <div class="payment-block">
+      <div class="payment-row">
+        <span class="payment-label">COMMITMENT FEE</span>
+        <span class="payment-value"><em>3,000 AED</em> — due before work begins</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-label">PAYMENT METHOD</span>
+        <span class="payment-value">USDT (Cryptocurrency)<br><span style="font-size:13px;color:rgba(240,237,232,0.35);">Wallet address provided upon signing</span></span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-label">PERFORMANCE COMMISSION</span>
+        <span class="payment-value"><em>15%</em> of all revenue generated through BlaqScale activity</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-label">COMMISSION BASIS</span>
+        <span class="payment-value">Money <em>received</em> — not invoiced, not booked. Paid.</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-label">REPORTING CYCLE</span>
+        <span class="payment-value">Revenue summary due <em>1st</em> of each month</span>
+      </div>
+      <div class="payment-row">
+        <span class="payment-label">COMMISSION INVOICE</span>
+        <span class="payment-value">Issued <em>2nd</em> of each month — due by <em>5th</em></span>
+      </div>
+    </div>
+    <p class="section-body" style="margin-top:24px;">The 3,000 AED commitment fee is <strong>non-refundable</strong> and must be received in USDT before any work begins. No exceptions. This fee secures BlaqScale's full operational commitment to the partnership.</p>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">04</span>
+    <div class="section-title">PERFORMANCE METRIC & ATTRIBUTION</div>
+    <p class="section-body">Revenue is considered BlaqScale-attributed when a booking or payment originates from any asset, campaign, channel, or funnel built or managed by BlaqScale.</p>
+    <ul class="items">
+      <li><span>A booking is attributed to BlaqScale if the customer first engaged with Xouffeur Driver through a <strong>BlaqScale-built asset</strong> — landing page, ad, funnel, or any other channel activated under this partnership</span></li>
+      <li><span><strong>Attribution window:</strong> 90 days from the customer's first point of contact through a BlaqScale channel. Any revenue received within this window is commissionable at 15%</span></li>
+      <li><span>Attribution holds regardless of the channel through which the booking ultimately closes — WhatsApp, phone, or direct — as long as first contact was through a BlaqScale asset</span></li>
+      <li><span>The following are <strong>excluded</strong> from commission scope: existing Xouffeur Driver clients prior to this agreement; referrals sourced entirely independently; repeat clients not re-acquired through BlaqScale activity</span></li>
+    </ul>
+    <p class="section-body" style="margin-top:24px;"><strong>Dispute process:</strong> Any attribution dispute will be resolved by referencing tracking data, booking records, and first-contact timestamps held by both parties. If no resolution is reached within 7 days, both parties agree to review source records together and resolve in good faith.</p>
+  </div>
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">05</span>
+    <div class="section-title">TRANSPARENCY & REPORTING</div>
+    <ul class="items">
+      <li><span>Asad provides a <strong>monthly revenue summary</strong> by the 1st of each month — all bookings and payments received through BlaqScale-attributed channels, with confirmed amounts</span></li>
+      <li><span>BlaqScale provides a <strong>monthly activity report</strong> — channels active, assets built, campaigns running, and performance data tied to revenue outcomes</span></li>
+      <li><span>Both parties maintain clean records throughout the partnership. Revenue tracking data serves as the primary reference in any attribution dispute</span></li>
+      <li><span>Asad has access to any BlaqScale-managed platform or dashboard relevant to Xouffeur Driver's acquisition at all times</span></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">06</span>
+    <div class="section-title">CLIENT RESPONSIBILITIES</div>
+    <ul class="items">
+      <li><span>Transfer <strong>3,000 AED in USDT</strong> before work begins — no exceptions</span></li>
+      <li><span>Provide access to any existing platforms, ad accounts, domains, or tools required for BlaqScale to execute</span></li>
+      <li><span>Report all revenue received through BlaqScale-attributed channels within the attribution window by the 1st of each month, with confirmed amounts</span></li>
+      <li><span>Respond to BlaqScale communications within <strong>24 hours</strong></span></li>
+      <li><span>If running paid advertising through BlaqScale: allocate and manage the agreed ad budget directly — this is separate from BlaqScale's fees and commission</span></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 7 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">07</span>
+    <div class="section-title">ASSET OWNERSHIP</div>
+    <ul class="items">
+      <li><span>All assets built by BlaqScale under this partnership — landing pages, booking systems, funnels, ad creatives — are delivered to Xouffeur Driver upon completion at <strong>no additional cost</strong></span></li>
+      <li><span>All customer data, booking data, and revenue data generated through this partnership remains the <strong>sole property of Xouffeur Driver</strong></span></li>
+      <li><span>BlaqScale will not share, sell, or use any client data outside the scope of delivering results under this agreement</span></li>
+      <li><span>BlaqScale retains ownership of proprietary methodology, systems architecture, and creative frameworks — not the deliverables built for Xouffeur Driver specifically</span></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 8 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">08</span>
+    <div class="section-title">TERMS & TERMINATION</div>
+    <ul class="items">
+      <li><span>This agreement is active upon signing by both parties <strong>and</strong> receipt of the 3,000 AED commitment fee in USDT</span></li>
+      <li><span>Either party may terminate with <strong>14 days written notice</strong></span></li>
+      <li><span>Post-termination: any BlaqScale-attributed revenue received by Xouffeur Driver within <strong>60 days</strong> after the termination date remains commissionable at 15%</span></li>
+      <li><span>BlaqScale is not responsible for revenue not generated due to Xouffeur Driver's failure to respond, failure to provide access, or failure to fulfill bookings once acquired</span></li>
+      <li><span>The commitment fee is non-refundable under any termination scenario</span></li>
+    </ul>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">09</span>
+    <div class="section-title">CONFIDENTIALITY</div>
+    <p class="section-body">Both parties agree to keep all shared information strictly confidential throughout and after the term of this agreement. This includes:</p>
+    <ul class="items">
+      <li><span>Revenue figures, pricing, booking volumes, and internal business data shared by either party</span></li>
+      <li><span>Account credentials, campaign strategy, funnel structure, and conversion data</span></li>
+      <li><span>The terms, structure, and existence of this agreement</span></li>
+      <li><span>All customer information and contact details</span></li>
+    </ul>
+    <p class="section-body" style="margin-top:24px;">Neither party shall disclose confidential information to any third party without prior written consent. This obligation survives termination.</p>
+  </div>
+
+  <!-- SECTION 10 -->
+  <div class="section">
+    <span class="divider-line"></span>
+    <span class="section-num">10</span>
+    <div class="section-title">GOVERNING LAW & JURISDICTION</div>
+    <p class="section-body">This agreement is governed by and construed in accordance with the laws of the <em>United Arab Emirates</em>, specifically under the jurisdiction of <em>Dubai</em>. Any disputes arising from this agreement that cannot be resolved in good faith between the parties shall be subject to the courts of Dubai, UAE.</p>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="signatures">
+    <div class="sig-block">
+      <span class="sig-role">REVENUE PARTNER</span>
+      <div class="sig-name">Waeven Xrysmond</div>
+      <div class="sig-company">BlaqScale</div>
+      <div class="sig-line"></div>
+    </div>
+    <div class="sig-block">
+      <span class="sig-role">CLIENT</span>
+      <div class="sig-name">Asad Ali</div>
+      <div class="sig-company">Xouffeur Driver</div>
+      <div class="sig-line"></div>
+    </div>
+  </div>
+
+  <!-- I AGREE -->
+  <div class="agree-section">
+    <span class="agree-label">ELECTRONIC AGREEMENT</span>
+    <div class="agree-inputs">
+      <input class="agree-input" id="ag-name" type="text" placeholder="Full Name" autocomplete="name">
+      <input class="agree-input" id="ag-email" type="email" placeholder="Email Address" autocomplete="email">
+    </div>
+    <button class="agree-btn" id="ag-btn" onclick="submitAgreement()">I AGREE TO THESE TERMS</button>
+    <div class="agree-error" id="ag-error">Please enter your full name and email.</div>
+    <div class="agree-success" id="ag-success">
+      <span class="check">✦</span>
+      <p>AGREEMENT CONFIRMED — A RECORD HAS BEEN SENT</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <span class="footer-brand">BLAQSCALE — CONFIDENTIAL</span>
+  </div>
+
+</div>
+
+<script>
+// EmailJS init
+emailjs.init('YCMq5SsKkY7yFppie');
+
+async function submitAgreement() {
+  const name = document.getElementById('ag-name').value.trim();
+  const email = document.getElementById('ag-email').value.trim();
+  const errorEl = document.getElementById('ag-error');
+  const btn = document.getElementById('ag-btn');
+
+  errorEl.style.display = 'none';
+
+  if (!name || !email || !email.includes('@')) {
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'PROCESSING...';
+
+  let ip = 'unavailable';
+  try {
+    const res = await fetch('https://api.ipify.org?format=json');
+    const data = await res.json();
+    ip = data.ip;
+  } catch(e) {}
+
+  const timestamp = new Date().toLocaleString('en-GB', {
+    timeZone: 'Asia/Dubai',
+    day:'2-digit', month:'long', year:'numeric',
+    hour:'2-digit', minute:'2-digit', second:'2-digit'
+  }) + ' (Dubai time)';
+
+  emailjs.send('service_rn3v2t3', 'template_tfobtm5', {
+    name: name,
+    email: email,
+    timestamp: timestamp,
+    ip: ip,
+    title: 'BlaqScale x Xouffeur Driver'
+  }).then(() => {
+    document.getElementById('ag-btn').style.display = 'none';
+    document.getElementById('ag-name').disabled = true;
+    document.getElementById('ag-email').disabled = true;
+    document.getElementById('ag-success').style.display = 'block';
+  }).catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'I AGREE TO THESE TERMS';
+    errorEl.textContent = 'Something went wrong. Try again.';
+    errorEl.style.display = 'block';
+  });
+}
+
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+sections.forEach(s => observer.observe(s));
+
+// Remove scan line after animation
+const scanLine = document.getElementById('scan-line');
+if (scanLine) {
+  scanLine.addEventListener('animationend', () => { scanLine.style.display = 'none'; });
+}
+</script>
+</body>
+</html>
