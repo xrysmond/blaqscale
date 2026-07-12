@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sawaed — Luxury Car Rental Dubai</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@200;300;400;500&family=Aldrich&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0805;--deep:#0f0c07;--gold:#c9a962;--gold-b:#f0d78c;--gold-d:#7a5e28;--cream:#f3eee1;--dim:rgba(243,238,225,0.52)}
+html{scroll-behavior:auto}
+body{background:var(--black);color:var(--cream);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* GOLD FOIL — animated metallic sweep, reserved for the wordmark only */
+.gold-foil{background:linear-gradient(115deg,var(--gold-d) 0%,var(--gold) 22%,var(--gold-b) 45%,var(--gold) 68%,var(--gold-d) 100%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:goldSweep 7s ease-in-out infinite}
+@keyframes goldSweep{0%{background-position:0% center}50%{background-position:100% center}100%{background-position:0% center}}
+
+/* TEXT REVEAL */
+.rl{display:block}
+.rli{display:block;opacity:0;filter:blur(18px);transform:translateY(-10px) scale(1.05);transition:opacity 1s ease var(--d,0s),filter 1.25s cubic-bezier(.16,1,.3,1) var(--d,0s),transform 1.25s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+.active .rli,.unveiled .rli{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}
+
+/* SCROLL BAR */
+.scroll-bar{position:fixed;top:0;left:0;height:1px;width:0%;background:var(--gold);z-index:400;pointer-events:none;transition:width .05s linear}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;justify-content:space-between;align-items:center;padding:26px 56px;transition:background .7s,backdrop-filter .7s,-webkit-backdrop-filter .7s;opacity:0;animation:fadeIn .8s ease .15s forwards}
+nav.scrolled{background:rgba(10,8,5,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.nav-logo{font-family:'Bodoni Moda',serif;font-weight:500;font-size:19px;letter-spacing:.28em}
+.nav-cta{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-b);text-decoration:none;border-bottom:1px solid rgba(240,215,140,.28);padding-bottom:2px;display:flex;align-items:center;gap:8px;transition:border-color .3s,color .3s}
+.nav-cta:hover{border-color:var(--gold-b);color:var(--cream)}
+
+/* HERO */
+.hero{position:relative;height:82vh;min-height:520px;display:flex;flex-direction:column;justify-content:center;padding:88px 64px 48px;overflow:hidden;z-index:2}
+.hero-bg{position:absolute;top:-18%;left:-8%;right:-8%;bottom:-18%;background:url('https://images.unsplash.com/photo-1715733965672-5c6a4c450f1e?w=1800&q=80') center 48%/cover no-repeat;will-change:transform;transform-origin:center center}
+.hero-grad{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(105deg,rgba(10,8,5,.92) 0%,rgba(10,8,5,.55) 42%,rgba(10,8,5,.08) 100%),linear-gradient(to top,rgba(10,8,5,.95) 0%,rgba(10,8,5,.42) 26%,rgba(10,8,5,0) 55%),linear-gradient(to bottom,rgba(10,8,5,.88) 0%,rgba(10,8,5,.32) 15%,rgba(10,8,5,0) 30%)}
+.hero-text{position:relative;z-index:2;max-width:640px}
+.hero-eyebrow{font-size:9px;letter-spacing:.46em;text-transform:uppercase;color:var(--gold-b);margin-bottom:24px;display:flex;align-items:center;gap:14px;opacity:0;animation:fadeUp .9s ease .5s forwards;text-shadow:0 2px 14px rgba(10,8,5,1)}
+.hero-eyebrow::before{content:'';flex-shrink:0;width:28px;height:1px;background:var(--gold-b);display:block}
+.hero h1{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(34px,4.8vw,66px);line-height:1.14;letter-spacing:-.01em;margin-bottom:24px;text-shadow:0 4px 40px rgba(10,8,5,.8)}
+.hero h1 em{font-style:italic;font-weight:500;color:var(--gold-b)}
+.hero-sub{font-size:11px;letter-spacing:.18em;color:var(--dim);line-height:2;opacity:0;animation:fadeUp .9s ease 1.9s forwards;text-shadow:0 2px 20px rgba(10,8,5,1)}
+
+/* LIGHT STREAK SEPARATOR — headlight motion, replaces a static ornament */
+.light-streak{position:relative;z-index:2;height:60px;display:flex;align-items:center;justify-content:center;overflow:hidden;will-change:transform}
+.streak-line{width:260px;height:1px;background:linear-gradient(to right,transparent,var(--gold-d),rgba(201,169,98,.4),var(--gold-d),transparent);position:relative;opacity:.55}
+.streak-core{position:absolute;top:50%;left:0;width:46px;height:1.5px;background:var(--gold-b);transform:translateY(-50%);box-shadow:0 0 10px 1px rgba(240,215,140,.65);animation:streakMove 4.5s ease-in-out infinite}
+@keyframes streakMove{0%{left:-10%;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:105%;opacity:0}}
+
+/* CURTAIN SYSTEM */
+.curtain-section{position:relative;overflow:hidden;z-index:2}
+.curtain{position:absolute;inset:0;background:var(--black);z-index:50;transform-origin:top;transition:transform 1.15s cubic-bezier(.16,1,.3,1);will-change:transform;pointer-events:none}
+.unveiled .curtain{transform:translateY(-100%)}
+.cs-fade{opacity:0;transform:translateY(18px);transition:opacity .9s ease var(--fd,.4s),transform .9s ease var(--fd,.4s)}
+.unveiled .cs-fade{opacity:1;transform:translateY(0)}
+.cs-left{opacity:0;transform:translateX(-22px);transition:opacity .9s ease .38s,transform .9s ease .38s}
+.unveiled .cs-left{opacity:1;transform:translateX(0)}
+.cs-right{opacity:0;transform:translateX(22px);transition:opacity .9s ease .5s,transform .9s ease .5s}
+.unveiled .cs-right{opacity:1;transform:translateX(0)}
+.line-wipe{position:absolute;inset:0;background:var(--black);transform-origin:right;transform:scaleX(1);transition:transform .9s cubic-bezier(.16,1,.3,1) var(--wd,0s)}
+.unveiled .line-wipe{transform:scaleX(0)}
+
+/* SECTION LABEL */
+.section-label{font-size:9px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);margin-bottom:40px;display:flex;align-items:center;gap:13px;font-family:'Aldrich',monospace}
+.section-label::before{content:'';width:28px;height:1px;background:var(--gold);display:block;animation:linePulse 4.5s ease-in-out infinite}
+@keyframes linePulse{0%,100%{transform:scaleX(1);opacity:.5}50%{transform:scaleX(1.7);opacity:1}}
+
+/* FINE PRINT — confrontation */
+.fineprint{background:var(--black);display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:84px 56px}
+.fineprint h2{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(32px,3.6vw,48px);line-height:1.16;letter-spacing:-.01em;margin-bottom:44px}
+.fineprint h2 em{font-style:italic;font-weight:500;color:var(--gold-b)}
+.fp-lines{display:flex;flex-direction:column}
+.fp-line{position:relative;overflow:hidden;font-size:12.5px;letter-spacing:.03em;color:var(--dim);line-height:1.75;padding:15px 15px 15px 18px;border-left:1px solid rgba(201,169,98,.18);transition:border-color .3s,color .3s}
+.fp-line:hover{border-color:var(--gold);color:var(--cream)}
+.fp-right{position:relative;height:560px}
+.fp-right img{width:100%;height:100%;object-fit:cover;filter:brightness(.78) contrast(1.08) saturate(.92)}
+.fp-right::after{content:'';position:absolute;inset:0;border:1px solid rgba(201,169,98,.18);pointer-events:none}
+.fp-caption{position:absolute;bottom:10px;right:12px;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:rgba(201,169,98,.5);font-family:'Aldrich',monospace}
+
+/* NO FINE PRINT — the resolution */
+.nofp{background:linear-gradient(160deg,#0a0805 0%,#14100a 50%,#0a0805 100%);padding:104px 56px;text-align:center;position:relative}
+.nofp-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:680px;height:680px;background:radial-gradient(circle,rgba(201,169,98,.14) 0%,transparent 68%);pointer-events:none;animation:glowPulse 6s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.75}50%{transform:translate(-50%,-50%) scale(1.13);opacity:.32}}
+.nofp-inner{max-width:700px;margin:0 auto;position:relative;z-index:1}
+.nofp-inner h2{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(36px,4.8vw,60px);line-height:1.16;letter-spacing:-.01em;margin-bottom:40px}
+.receipt-line{width:100%;border-top:1px dashed rgba(201,169,98,.3);margin:0 0 40px}
+.nofp-body{font-size:13px;letter-spacing:.06em;color:var(--dim);line-height:2.35;margin-bottom:44px}
+.nofp-body em{font-style:italic;color:var(--gold-b)}
+.nofp-tag{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:16px;font-family:'Aldrich',monospace}
+.nofp-tag::before,.nofp-tag::after{content:'';width:36px;height:1px;background:var(--gold);opacity:.45;animation:linePulse 4.5s ease-in-out infinite}
+.nofp-tag::after{animation-delay:2.25s}
+
+/* THE DRIVE — desire, with skyline/highway wireframe */
+.drive{background:var(--deep);text-align:center;padding:96px 56px;position:relative;overflow:hidden}
+.wire-scene{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:.55;animation:wirePulse 9s ease-in-out infinite}
+@keyframes wirePulse{0%,100%{opacity:.42}50%{opacity:.62}}
+.drive-inner{max-width:760px;margin:0 auto;position:relative;z-index:2}
+.drive h2{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(36px,4.8vw,60px);line-height:1.16;letter-spacing:-.01em}
+.drive h2 em{font-style:italic;font-weight:500;color:var(--gold-b)}
+.drive-divider{width:0;height:1px;background:var(--gold);margin:36px auto;opacity:0;transition:width 1.1s cubic-bezier(.16,1,.3,1) .7s,opacity .6s ease .7s}
+.unveiled .drive-divider{width:72px;opacity:.55}
+.drive p{font-size:13px;letter-spacing:.06em;color:var(--dim);line-height:2.25;max-width:480px;margin:0 auto}
+.drive p em{font-style:italic;color:var(--gold-b)}
+
+/* PILLARS */
+.pillars-section{background:var(--black);padding:88px 56px;border-top:1px solid rgba(201,169,98,.1);border-bottom:1px solid rgba(201,169,98,.1);position:relative;z-index:2}
+.pillars-inner{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;gap:0;max-width:1100px;margin:0 auto}
+.pl-divider{background:linear-gradient(to bottom,transparent,rgba(201,169,98,.25),transparent);width:1px;margin:0 40px}
+.pl-block{padding:0 12px;display:flex;flex-direction:column;gap:16px}
+.pl-block:hover .pl-name{color:var(--gold-b)}
+.pl-block:hover .pl-num{opacity:1}
+.pl-num{font-family:'Aldrich',monospace;font-size:10px;letter-spacing:.36em;color:var(--gold);opacity:.5;transition:opacity .4s}
+.pl-name{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(26px,2.6vw,36px);letter-spacing:-.01em;color:var(--cream);line-height:1;transition:color .4s}
+.pl-desc{font-size:11px;letter-spacing:.06em;color:var(--dim);line-height:1.9;max-width:240px}
+
+/* FLEET */
+.fleet-section{position:relative;height:190vh;background:var(--black);z-index:2}
+.fleet-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:44px}
+.fleet-header{padding:0 56px;display:flex;align-items:center;gap:13px;font-size:9px;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);flex-shrink:0;opacity:0;transform:translateY(10px);transition:opacity .7s,transform .7s;font-family:'Aldrich',monospace}
+.fleet-header.active{opacity:1;transform:translateY(0)}
+.fleet-header::before{content:'';width:28px;height:1px;background:var(--gold);display:block;animation:linePulse 4.5s ease-in-out infinite}
+.fleet-track{display:flex;gap:18px;padding:0 56px;will-change:transform;flex-shrink:0}
+.f-item{flex:0 0 340px;height:56vh;position:relative;overflow:hidden;border:1px solid rgba(201,169,98,.22);background:linear-gradient(155deg,#120e08 0%,#0a0805 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:border-color .4s}
+.f-item:hover{border-color:rgba(201,169,98,.5)}
+.f-tier{font-family:'Bodoni Moda',serif;font-weight:400;font-size:26px;letter-spacing:.06em;color:var(--gold-b)}
+.f-tagline{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:400;font-size:12.5px;color:var(--dim);max-width:220px;text-align:center;line-height:1.6}
+.f-pending{font-family:'Aldrich',monospace;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:rgba(201,169,98,.4)}
+.f-item::before{content:'';position:absolute;top:14px;left:14px;right:14px;bottom:14px;border:1px solid rgba(201,169,98,.12);pointer-events:none}
+
+/* STATS — instrument gauges */
+.stats{padding:56px 56px;display:flex;justify-content:center;flex-wrap:wrap;gap:0;background:rgba(201,169,98,.04);position:relative;z-index:2}
+.stat-item{text-align:center;padding:20px 48px;opacity:0;transform:translateY(10px);transition:opacity .7s,transform .7s;position:relative}
+.stat-item+.stat-item::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:40px;width:1px;background:linear-gradient(to bottom,transparent,rgba(201,169,98,.3),transparent)}
+.stat-item.active{opacity:1;transform:translateY(0)}
+.stat-item:nth-child(2){transition-delay:.15s}
+.stat-item:nth-child(3){transition-delay:.3s}
+.gauge-wrap{position:relative;width:112px;height:112px;margin:0 auto 16px}
+.gauge-svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge-track{fill:none;stroke:rgba(201,169,98,.14);stroke-width:2}
+.gauge-fill{fill:none;stroke:var(--gold);stroke-width:2;stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:326.7;transition:stroke-dashoffset 1.9s cubic-bezier(.16,1,.3,1)}
+.gauge-ticks line{stroke:rgba(201,169,98,.3);stroke-width:1}
+.stat-number{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Aldrich',monospace;font-size:21px;color:var(--gold-b);letter-spacing:-.02em}
+.stat-label{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+
+/* ON RECORD */
+.onrecord{background:var(--deep);padding:84px 56px}
+.or-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1100px}
+.or-card{padding-top:32px;border-top:1px solid rgba(201,169,98,.15)}
+.or-card:nth-child(1){--fd:.38s}.or-card:nth-child(2){--fd:.56s}.or-card:nth-child(3){--fd:.74s}
+.or-quote{font-family:'Bodoni Moda',serif;font-style:italic;font-weight:400;font-size:clamp(15px,1.5vw,19px);line-height:1.7;color:var(--cream);margin-bottom:20px}
+.or-author{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:11px;font-family:'Aldrich',monospace}
+.or-author::before{content:'';width:22px;height:1px;background:var(--gold);display:block}
+
+/* CTA */
+.cta-section{position:relative;min-height:66vh;padding:100px 0;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:2}
+.cta-bg{position:absolute;top:-18%;left:-8%;right:-8%;bottom:-18%;background:linear-gradient(to bottom,rgba(10,8,5,.6) 0%,rgba(10,8,5,.3) 50%,rgba(10,8,5,.94) 100%),url('https://images.unsplash.com/photo-1753029111752-f12018752cd3?w=1800&q=80') center/cover no-repeat;will-change:transform}
+.cta-inner{position:relative;z-index:2;text-align:center;max-width:680px;padding:0 36px}
+.cta-inner h2{font-family:'Bodoni Moda',serif;font-weight:400;font-size:clamp(36px,4.8vw,60px);line-height:1.16;letter-spacing:-.01em;margin-bottom:18px}
+.cta-inner h2 em{font-style:italic;font-weight:500;color:var(--gold-b)}
+.cta-sub{font-size:10px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;margin-bottom:46px;opacity:0;transition:opacity .9s ease .55s}
+.cta-inner.active .cta-sub{opacity:1}
+.cta-btn{display:inline-block;padding:17px 48px;background:transparent;border:1px solid var(--gold);color:var(--gold-b);font-family:'Jost',sans-serif;font-weight:400;font-size:10px;letter-spacing:.36em;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;opacity:0;transition:opacity .9s ease .82s,color .4s}
+.cta-inner.active .cta-btn{opacity:1}
+.cta-btn::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.cta-btn:hover::before{transform:scaleX(1)}
+.cta-btn:hover{color:var(--black)}
+.cta-btn span{position:relative;z-index:1;display:flex;align-items:center;gap:9px;justify-content:center}
+.cta-note{margin-top:22px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(201,169,98,.5);opacity:0;transition:opacity .9s ease 1.1s}
+.cta-inner.active .cta-note{opacity:1}
+
+/* FOOTER */
+footer{padding:38px 56px;border-top:1px solid rgba(201,169,98,.1);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.footer-logo{font-family:'Bodoni Moda',serif;font-size:13px;letter-spacing:.24em;color:var(--dim)}
+.footer-logo span{color:var(--gold)}
+.footer-right{font-size:9px;letter-spacing:.24em;color:rgba(201,169,98,.4);text-transform:uppercase;font-family:'Aldrich',monospace}
+
+/* FLOAT WA */
+.float-wa{position:fixed;bottom:30px;right:30px;z-index:300;display:flex;align-items:center;gap:9px;padding:13px 20px;background:rgba(10,8,5,.95);border:1px solid rgba(201,169,98,.42);color:var(--gold-b);font-family:'Jost',sans-serif;font-size:8.5px;font-weight:400;letter-spacing:.34em;text-transform:uppercase;text-decoration:none;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;pointer-events:none;transform:translateY(10px);transition:opacity .5s,transform .5s,border-color .3s}
+.float-wa.show{opacity:1;pointer-events:all;transform:translateY(0)}
+.float-wa:hover{border-color:var(--gold);color:var(--cream)}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:20px 22px}
+  .hero{height:78vh;min-height:460px;padding:76px 22px 40px}
+  .hero h1{font-size:clamp(32px,8.5vw,46px)}
+  .hero-text{max-width:100%}
+  .fineprint{grid-template-columns:1fr;gap:36px;padding:56px 22px}
+  .fp-right{height:260px}
+  .nofp{padding:64px 22px}
+  .drive{padding:64px 22px}
+  .pillars-inner{grid-template-columns:1fr;gap:0}
+  .pl-divider{width:100%;height:1px;background:linear-gradient(to right,transparent,rgba(201,169,98,.25),transparent);margin:30px 0}
+  .pillars-section{padding:56px 22px}
+  .stats{padding:32px 22px}
+  .stat-item{padding:20px 26px}
+  .onrecord{padding:56px 22px}
+  .or-grid{grid-template-columns:1fr;gap:28px}
+  footer{padding:28px 22px;flex-direction:column;gap:10px;text-align:center}
+  .cta-section{min-height:auto;padding:72px 0}
+  .fleet-section{height:auto}
+  .fleet-sticky{position:relative;height:auto;padding:52px 0;gap:22px}
+  .fleet-track{padding:0 22px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .fleet-track::-webkit-scrollbar{display:none}
+  .f-item{flex:0 0 74vw;height:48vw}
+  .fleet-header{padding:0 22px}
+  .float-wa{bottom:18px;right:16px;padding:11px 14px}
+  .light-streak{height:44px}
+  .streak-line{width:120px}
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-bar" id="scrollBar"></div>
+
+<a href="https://wa.me/971XXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20reserve%20a%20car%20with%20Sawaed." class="float-wa" id="floatWa" target="_blank">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  Reserve
+</a>
+
+<nav id="mainNav">
+  <div class="nav-logo gold-foil">SAWAED</div>
+  <a href="https://wa.me/971XXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20reserve%20a%20car%20with%20Sawaed." class="nav-cta" target="_blank">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Reserve Now
+  </a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-text" id="heroText">
+    <div class="hero-eyebrow">Dubai · Luxury Car Rental</div>
+    <h1>
+      <span class="rl" style="--d:.7s"><span class="rli">You're not renting</span></span>
+      <span class="rl" style="--d:.9s"><span class="rli">a car.</span></span>
+      <span class="rl" style="--d:1.1s"><span class="rli"><em>You're renting</em></span></span>
+      <span class="rl" style="--d:1.3s"><span class="rli"><em>the version of yourself who owns one.</em></span></span>
+    </h1>
+    <p class="hero-sub">Sawaed makes sure nothing about the process gets in the way of that.</p>
+  </div>
+</section>
+
+<div class="light-streak" id="streak1"><div class="streak-line"><div class="streak-core"></div></div></div>
+
+<!-- ═══ THE DRIVE ═══ -->
+<div class="drive curtain-section" id="secDrive">
+  <div class="curtain"></div>
+
+  <svg class="wire-scene" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g stroke="rgba(201,169,98,0.3)" stroke-width="0.9" fill="none" stroke-linecap="square">
+      <!-- horizon -->
+      <line x1="0" y1="460" x2="1200" y2="460"/>
+      <!-- tall tower, tapering -->
+      <rect x="553" y="300" width="52" height="160"/>
+      <rect x="563" y="180" width="32" height="120"/>
+      <rect x="571" y="118" width="16" height="62"/>
+      <line x1="579" y1="118" x2="579" y2="90"/>
+      <!-- skyline, left of tower -->
+      <rect x="70" y="358" width="46" height="102"/>
+      <rect x="128" y="318" width="34" height="142"/>
+      <rect x="174" y="384" width="56" height="76"/>
+      <rect x="242" y="300" width="40" height="160"/>
+      <rect x="296" y="352" width="60" height="108"/>
+      <rect x="368" y="278" width="34" height="182"/>
+      <rect x="416" y="392" width="50" height="68"/>
+      <rect x="478" y="330" width="42" height="130"/>
+      <!-- skyline, right of tower -->
+      <rect x="652" y="310" width="44" height="150"/>
+      <rect x="708" y="360" width="36" height="100"/>
+      <rect x="756" y="278" width="54" height="182"/>
+      <rect x="822" y="340" width="40" height="120"/>
+      <rect x="874" y="296" width="58" height="164"/>
+      <rect x="948" y="376" width="34" height="84"/>
+      <rect x="994" y="322" width="48" height="138"/>
+      <rect x="1054" y="360" width="36" height="100"/>
+      <!-- highway converging to horizon -->
+      <line x1="220" y1="680" x2="600" y2="460"/>
+      <line x1="980" y1="680" x2="600" y2="460"/>
+      <line x1="420" y1="680" x2="600" y2="460" stroke-dasharray="6 10"/>
+      <line x1="780" y1="680" x2="600" y2="460" stroke-dasharray="6 10"/>
+      <line x1="280" y1="650" x2="920" y2="650"/>
+      <line x1="330" y1="620" x2="870" y2="620"/>
+      <line x1="380" y1="590" x2="820" y2="590"/>
+      <line x1="430" y1="560" x2="770" y2="560"/>
+      <line x1="470" y1="530" x2="730" y2="530"/>
+      <line x1="510" y1="500" x2="690" y2="500"/>
+      <line x1="545" y1="480" x2="655" y2="480"/>
+    </g>
+  </svg>
+
+  <div class="drive-inner">
+    <h2>
+      <span class="rl" style="--d:.08s"><span class="rli">You want to arrive</span></span>
+      <span class="rl" style="--d:.24s"><span class="rli">and <em>feel it land.</em></span></span>
+    </h2>
+    <div class="drive-divider"></div>
+    <p class="cs-fade" style="--fd:.82s">Not because it's loud. Because it's unmistakably the one you pictured.<br><br>
+    The engine that answers before you've finished asking. The city blurring gold at the edges of Sheikh Zayed Road.<br><br>
+    The valet's second look. The photo that doesn't need a filter.<br>
+    Delivered to your door — hotel, villa, the airport, wherever you're staying. And when the drive ends, so does the transaction. <em>Completely.</em></p>
+  </div>
+</div>
+
+<div class="light-streak" id="streak2"><div class="streak-line"><div class="streak-core" style="animation-delay:2s"></div></div></div>
+
+<!-- ═══ THE FINE PRINT ═══ -->
+<div class="fineprint curtain-section" id="secFinePrint">
+  <div class="curtain"></div>
+  <div class="cs-left">
+    <div class="section-label">The Fine Print</div>
+    <h2>
+      <span class="rl" style="--d:.05s"><span class="rli">Every operator promises</span></span>
+      <span class="rl" style="--d:.2s"><span class="rli">transparent pricing.</span></span>
+      <span class="rl" style="--d:.35s"><span class="rli"><em>Almost none</em></span></span>
+      <span class="rl" style="--d:.5s"><span class="rli"><em>of them mean it.</em></span></span>
+    </h2>
+    <div class="fp-lines">
+      <div class="fp-line"><span class="line-wipe" style="--wd:.32s"></span>The quote says one number. The invoice says another.</div>
+      <div class="fp-line"><span class="line-wipe" style="--wd:.5s"></span>A scratch you didn't make. A deposit that isn't coming back without a fight.</div>
+      <div class="fp-line"><span class="line-wipe" style="--wd:.68s"></span>The fear was never the deposit. It's standing in a parking lot, defending yourself against a charge you didn't agree to — on the one day you paid to feel untouchable.</div>
+    </div>
+  </div>
+  <div class="fp-right cs-right">
+    <img src="https://images.unsplash.com/photo-1550955346-32046005d17d?w=900&q=80" alt="Exotic car interior">
+    <div class="fp-caption">Handover · Every Detail Confirmed</div>
+  </div>
+</div>
+
+<div class="light-streak" id="streak3"><div class="streak-line"><div class="streak-core" style="animation-delay:3.5s"></div></div></div>
+
+<!-- ═══ NO FINE PRINT ═══ -->
+<div class="nofp curtain-section" id="secNoFinePrint">
+  <div class="curtain"></div>
+  <div class="nofp-glow"></div>
+  <div class="nofp-inner">
+    <div class="section-label cs-fade" style="justify-content:center;--fd:.28s">No Fine Print</div>
+    <h2>
+      <span class="rl" style="--d:.32s"><span class="rli">The price you see</span></span>
+      <span class="rl" style="--d:.5s"><span class="rli">is the price you pay.</span></span>
+    </h2>
+    <div class="receipt-line cs-fade" style="--fd:.5s"></div>
+    <p class="nofp-body cs-fade" style="--fd:.55s">
+      Every fee, stated before you commit — Salik, insurance, delivery, all of it. Nothing appears at return that wasn't already in your quote.<br><br>
+      Not because the number matters. Because you shouldn't have to defend yourself to enjoy something you already paid for.
+    </p>
+    <div class="nofp-tag cs-fade" style="--fd:.85s">Transparent Pricing · Zero Surprise Fees</div>
+  </div>
+</div>
+
+<!-- ═══ PILLARS ═══ -->
+<section class="pillars-section curtain-section" id="secPillars">
+  <div class="curtain"></div>
+  <div class="pillars-inner">
+    <div class="pl-block cs-fade" style="--fd:.18s">
+      <div class="pl-num">01</div>
+      <div class="pl-name">Selection</div>
+      <div class="pl-desc">Curated fleet. Every unit inspected, not just insured.</div>
+    </div>
+    <div class="pl-divider"></div>
+    <div class="pl-block cs-fade" style="--fd:.38s">
+      <div class="pl-num">02</div>
+      <div class="pl-name">Delivery</div>
+      <div class="pl-desc">Wherever you're staying, on time — not the other way around.</div>
+    </div>
+    <div class="pl-divider"></div>
+    <div class="pl-block cs-fade" style="--fd:.58s">
+      <div class="pl-num">03</div>
+      <div class="pl-name">Terms</div>
+      <div class="pl-desc">Priced before you arrive. Nothing to negotiate when you're done.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THE FLEET ═══ -->
+<div class="fleet-section" id="fleetSection">
+  <div class="fleet-sticky">
+    <div class="fleet-header" id="fleetHeader">The Fleet</div>
+    <div class="fleet-track" id="fleetTrack">
+      <div class="f-item"><div class="f-tier">Exotic</div><div class="f-tagline">For the drive that needs no explanation.</div><div class="f-pending">Fleet Details Pending</div></div>
+      <div class="f-item"><div class="f-tier">Executive</div><div class="f-tagline">Command the room before you've said a word.</div><div class="f-pending">Fleet Details Pending</div></div>
+      <div class="f-item"><div class="f-tier">SUV</div><div class="f-tagline">Presence, without the compromise.</div><div class="f-pending">Fleet Details Pending</div></div>
+      <div class="f-item"><div class="f-tier">Convertible</div><div class="f-tagline">Nothing between you and the wind off the Gulf.</div><div class="f-pending">Fleet Details Pending</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats">
+  <div class="stat-item" id="statItem1">
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 120 120">
+        <circle class="gauge-track" cx="60" cy="60" r="52"/>
+        <circle class="gauge-fill" id="gaugeFill1" cx="60" cy="60" r="52"/>
+        <g class="gauge-ticks" id="gaugeTicks1"></g>
+      </svg>
+      <div class="stat-number" id="statNum1">0</div>
+    </div>
+    <div class="stat-label">Hidden Fees</div>
+  </div>
+  <div class="stat-item" id="statItem2">
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 120 120">
+        <circle class="gauge-track" cx="60" cy="60" r="52"/>
+        <circle class="gauge-fill" id="gaugeFill2" cx="60" cy="60" r="52"/>
+        <g class="gauge-ticks" id="gaugeTicks2"></g>
+      </svg>
+      <div class="stat-number" id="statNum2">24/7</div>
+    </div>
+    <div class="stat-label">Delivery Across Dubai</div>
+  </div>
+  <div class="stat-item" id="statItem3">
+    <div class="gauge-wrap">
+      <svg class="gauge-svg" viewBox="0 0 120 120">
+        <circle class="gauge-track" cx="60" cy="60" r="52"/>
+        <circle class="gauge-fill" id="gaugeFill3" cx="60" cy="60" r="52"/>
+        <g class="gauge-ticks" id="gaugeTicks3"></g>
+      </svg>
+      <div class="stat-number" id="statNum3">0%</div>
+    </div>
+    <div class="stat-label">Price Locked Before Arrival</div>
+  </div>
+</div>
+
+<!-- ═══ ON RECORD ═══ -->
+<div class="onrecord curtain-section" id="secOnRecord">
+  <div class="curtain"></div>
+  <div class="section-label cs-fade" style="margin-bottom:52px;--fd:.3s">On Record</div>
+  <div class="or-grid">
+    <div class="or-card cs-fade">
+      <div class="or-quote">"[Client testimonial — send me a real quote to replace this]"</div>
+      <div class="or-author">[Name] · [Location]</div>
+    </div>
+    <div class="or-card cs-fade">
+      <div class="or-quote">"[Client testimonial — send me a real quote to replace this]"</div>
+      <div class="or-author">[Name] · [Location]</div>
+    </div>
+    <div class="or-card cs-fade">
+      <div class="or-quote">"[Client testimonial — send me a real quote to replace this]"</div>
+      <div class="or-author">[Name] · [Location]</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section" id="consult">
+  <div class="cta-bg" id="ctaBg"></div>
+  <div class="cta-inner" id="ctaInner">
+    <h2>
+      <span class="rl" style="--d:0s"><span class="rli">That version of you</span></span>
+      <span class="rl" style="--d:.18s"><span class="rli"><em>is one message away.</em></span></span>
+    </h2>
+    <p class="cta-sub">One conversation on WhatsApp.<br>That's the whole process.</p>
+    <a href="https://wa.me/971XXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20reserve%20a%20car%20with%20Sawaed." class="cta-btn" target="_blank">
+      <span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Reserve on WhatsApp
+      </span>
+    </a>
+    <div class="cta-note">No hidden line items. Ever.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span>Sawaed</span> · Luxury Car Rental</div>
+  <div class="footer-right">Dubai, UAE</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+'use strict';
+
+/* ═══ LENIS ═══ */
+let lenis = null;
+try {
+  lenis = new Lenis({
+    duration: 1.75,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    wheelMultiplier: 0.88
+  });
+} catch(e) {}
+
+/* ═══ DOM REFS ═══ */
+const heroBg = document.getElementById('heroBg');
+const ctaBg = document.getElementById('ctaBg');
+const scrollBar = document.getElementById('scrollBar');
+const floatWa = document.getElementById('floatWa');
+const mainNav = document.getElementById('mainNav');
+const fleetSection = document.getElementById('fleetSection');
+const fleetTrack = document.getElementById('fleetTrack');
+const consultEl = document.getElementById('consult');
+
+/* ═══ LIGHT STREAK PARALLAX DATA ═══ */
+const streaks = Array.from(document.querySelectorAll('.light-streak'));
+
+/* ═══ SINGLE RAF LOOP ═══ */
+function tick(ts) {
+  if (lenis) lenis.raf(ts);
+
+  const sy  = lenis ? lenis.scroll : window.scrollY;
+  const vh  = window.innerHeight;
+  const mob = window.innerWidth <= 900;
+
+  /* HERO BG — alive: drift + slow zoom + scroll parallax */
+  if (heroBg) {
+    const t  = ts * .00022;
+    const dx = Math.sin(t * .52) * 10;
+    const dy = Math.cos(t * .36) * 7 + sy * .22;
+    const sc = 1.09 + Math.sin(t * .2) * .02;
+    heroBg.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + sc + ')';
+  }
+
+  /* CTA BG — parallax */
+  if (ctaBg && consultEl) {
+    const rel = (sy - consultEl.offsetTop) * .16;
+    ctaBg.style.transform = 'translateY(' + rel + 'px)';
+  }
+
+  /* LIGHT STREAKS — subtle float with scroll */
+  for (let i = 0; i < streaks.length; i++) {
+    const s = streaks[i];
+    const drift = (sy - s.offsetTop) * .028;
+    s.style.transform = 'translateY(' + drift + 'px)';
+  }
+
+  /* FLEET HORIZONTAL */
+  if (!mob && fleetSection && fleetTrack) {
+    const p    = Math.max(0, Math.min(1, (sy - fleetSection.offsetTop) / (fleetSection.offsetHeight - vh)));
+    const maxX = -(fleetTrack.scrollWidth - window.innerWidth + 112);
+    fleetTrack.style.transform = 'translateX(' + (p * maxX) + 'px)';
+  }
+
+  /* SCROLL BAR */
+  if (scrollBar) {
+    const max = document.body.scrollHeight - vh;
+    scrollBar.style.width = Math.min(100, (sy / max) * 100) + '%';
+  }
+
+  /* FLOAT BUTTON */
+  if (floatWa) sy > vh * .28 ? floatWa.classList.add('show') : floatWa.classList.remove('show');
+
+  /* NAV glass on scroll */
+  if (mainNav) sy > 60 ? mainNav.classList.add('scrolled') : mainNav.classList.remove('scrolled');
+
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+/* ═══ HERO REVEAL ═══ */
+setTimeout(() => {
+  const ht = document.getElementById('heroText');
+  if (ht) ht.classList.add('active');
+}, 60);
+
+/* ═══ CURTAIN SECTIONS ═══ */
+document.querySelectorAll('.curtain-section').forEach(section => {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { section.classList.add('unveiled'); io.unobserve(section); }
+    });
+  }, { threshold: 0.12 });
+  io.observe(section);
+});
+
+/* ═══ CTA SECTION ═══ */
+const ctaInner = document.getElementById('ctaInner');
+if (ctaInner) {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) ctaInner.classList.add('active'); });
+  }, { threshold: 0.2 }).observe(ctaInner);
+}
+const ctaH2 = ctaInner ? ctaInner.querySelector('h2') : null;
+if (ctaH2) {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) ctaH2.classList.add('active'); });
+  }, { threshold: 0.2 }).observe(ctaH2);
+}
+
+/* ═══ FLEET HEADER ═══ */
+const fleetHeader = document.getElementById('fleetHeader');
+if (fleetHeader) {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) fleetHeader.classList.add('active'); });
+  }, { threshold: 0.1 }).observe(fleetHeader);
+}
+
+/* ═══ GAUGE TICKS — computed at runtime, not hand-plotted ═══ */
+function buildTicks(id, cx, cy, rOuter, rInner, count) {
+  const g = document.getElementById(id);
+  if (!g) return;
+  for (let i = 0; i < count; i++) {
+    const a  = (i / count) * Math.PI * 2 - Math.PI / 2;
+    const x1 = cx + rOuter * Math.cos(a), y1 = cy + rOuter * Math.sin(a);
+    const x2 = cx + rInner * Math.cos(a), y2 = cy + rInner * Math.sin(a);
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    g.appendChild(line);
+  }
+}
+['1','2','3'].forEach(n => buildTicks('gaugeTicks' + n, 60, 60, 58, 53, 12));
+
+/* ═══ STATS — gauge fill + count ═══ */
+function animateCount(el, target, suffix, step) {
+  let v = 0;
+  (function loop() {
+    v = Math.min(v + step, target);
+    el.textContent = v + suffix;
+    if (v < target) requestAnimationFrame(loop);
+  })();
+}
+
+function activateStat(itemId, fillId, numEl, target, suffix, step) {
+  const item = document.getElementById(itemId);
+  const fill = document.getElementById(fillId);
+  if (!item) return;
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        item.classList.add('active');
+        if (fill) fill.style.strokeDashoffset = '0';
+        if (numEl) {
+          if (step > 0) animateCount(numEl, target, suffix, step);
+          else numEl.textContent = target + suffix;
+        }
+      }
+    });
+  }, { threshold: 0.35 }).observe(item);
+}
+
+activateStat('statItem1', 'gaugeFill1', document.getElementById('statNum1'), 0, '', 0);
+activateStat('statItem2', 'gaugeFill2', null, 0, '', 0);
+activateStat('statItem3', 'gaugeFill3', document.getElementById('statNum3'), 100, '%', 5);
+</script>
+</body>
+</html>
