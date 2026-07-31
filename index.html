@@ -37,22 +37,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--black); 
 
 
 /* ── INIT SCAN LINE ── */
-#scan-line {
-  position:fixed; left:0; right:0; height:1px;
-  background:linear-gradient(90deg, transparent 0%, rgba(155,27,42,0.6) 20%, rgba(196,18,48,0.9) 50%, rgba(155,27,42,0.6) 80%, transparent 100%);
-  box-shadow:0 0 12px rgba(155,27,42,0.8), 0 0 24px rgba(155,27,42,0.3);
-  pointer-events:none; z-index:150;
-  top:0; opacity:0; will-change:transform,opacity;
-}
-#scan-line.run {
-  animation:scanDown 1.4s cubic-bezier(0.4,0,0.6,1) forwards;
-}
-@keyframes scanDown {
-  0%   { transform:translateY(0);    opacity:0; }
-  5%   { opacity:1; }
-  95%  { opacity:1; }
-  100% { transform:translateY(100vh); opacity:0; }
-}
+
 
 
 /* ── VIEW SYSTEM ── */
@@ -142,7 +127,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--black); 
 
 .intro-brand {
   font-family:'Cinzel',serif; font-size:clamp(12px,3vw,15px);
-  letter-spacing:0.6em; color:var(--white); margin-bottom:48px;
+  letter-spacing:0.6em; color:var(--white); margin-bottom:20px;
   opacity:0; animation:fadeUp 1s ease forwards 1.4s; position:relative; z-index:1;
   padding-left:0.6em; /* re-center for trailing letter-spacing */
 }
@@ -154,7 +139,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--black); 
   letter-spacing:0.55em; padding:0;
   background:transparent; border:none; cursor:pointer;
   opacity:0; animation:fadeUp 1s ease forwards 2s; outline:none;
-  margin-top:28px;
+  margin-top:8px;
 }
 .btn-enter-inner {
   display:flex; align-items:center; justify-content:center;
@@ -729,6 +714,10 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--black); 
 
   /* Center content vertically */
   #view-ready, #view-notready { justify-content:center; }
+
+  /* ANIMUS DESKTOP — mobile: hide label, move logo to top-right corner */
+  .animus-desktop { left:auto; bottom:auto; top:16px; right:16px; }
+  .animus-desktop-label { display:none; }
 }
 
 @media (max-width: 360px) {
@@ -891,7 +880,6 @@ html, body { width:100%; height:100%; overflow:hidden; background:var(--black); 
 <canvas id="grid-canvas"></canvas>
 <div class="grid-fog"></div>
 
-<div id="scan-line"></div>
 
 <!-- CINEMATIC INTRO OVERLAY -->
 <div id="cinematic-overlay">
@@ -3162,9 +3150,6 @@ function revealCopy(elId) {
   if (nrCp) { _wrapChars(nrCp); nrCp._drWrapped = false; }
 })();
 
-const scanLine = document.getElementById('scan-line');
-setTimeout(() => { scanLine.classList.add('run'); }, 200);
-scanLine.addEventListener('animationend', () => { scanLine.style.display = 'none'; });
 
 // Backgrounding the tab or navigating away shouldn't leave the reveal
 // audio looping unattended. Scoped to whichever section/copy is currently
